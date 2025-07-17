@@ -1,74 +1,60 @@
-export function HowItWorks() {
-  const steps = [
-    {
-      number: '1',
-      title: 'Get a Lightning Address',
-      description:
-        'Sign up for a Lightning wallet like Alby, Strike, or CashApp to get your Lightning address (looks like email@domain.com)',
-      icon: '⚡',
-    },
-    {
-      number: '2',
-      title: 'Configure Your Widget',
-      description:
-        'Enter your Lightning address, customize the button text and color to match your brand',
-      icon: '🎨',
-    },
-    {
-      number: '3',
-      title: 'Copy & Paste Code',
-      description:
-        "Copy the generated embed code and paste it anywhere on your website – it's just 3 lines of HTML",
-      icon: '📋',
-    },
-    {
-      number: '4',
-      title: 'Receive Tips Instantly',
-      description:
-        'Your audience can tip you Bitcoin instantly by scanning a QR code or clicking to open their wallet',
-      icon: '🎉',
-    },
-  ]
+import { HowItWorksStep } from './HowItWorksStep'
 
+export function HowItWorks() {
   return (
     <section
       id="how-it-works"
       className="py-20 relative text-white"
       style={{
         backgroundColor: '#181b1f',
+        backgroundImage: 'linear-gradient(to top, #181b1f 80%, transparent 100%)',
       }}
     >
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-6 sm:px-12 md:px-16">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-display font-bold mb-4">How It Works</h2>
           <p className="text-xl font-body text-white/80 max-w-2xl mx-auto">
-            Get your Lightning tip widget running in under 5 minutes. No technical knowledge
-            required.
+            Get your Lightning tip widget up and running in just a few steps — no coding skills
+            needed.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {steps.map((step, index) => (
-            <div key={index} className="text-center">
-              <div className="bg-orange-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl">{step.icon}</span>
-              </div>
-              <div className="bg-orange-500 text-white rounded-full w-8 h-8 flex items-center justify-center mx-auto mb-4 text-sm font-bold">
-                {step.number}
-              </div>
-              <h3 className="text-xl font-display font-semibold mb-3">{step.title}</h3>
-              <p className="font-body text-white/80 leading-relaxed">{step.description}</p>
-            </div>
-          ))}
-        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6">
+          <HowItWorksStep
+            number="1"
+            title="Get a Lightning Address"
+            description="Sign up for a wallet like Alby, Wallet of Satoshi, or Phoenix — these support Lightning Addresses. You can also search for other Bitcoin wallets with Lightning support."
+          />
 
-        <div className="mt-16 text-center">
-          <a
-            href="#get-a-tipjar"
-            className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-lg text-lg font-display font-semibold transition-colors inline-block"
-          >
-            Start Now – It's Free
-          </a>
+          <HowItWorksStep
+            number="2"
+            title="Find Your Address"
+            description="If you already have a Lightning-enabled wallet, check the app’s settings, profile page, or receive tab. Look for something that resembles an email address, such as yourname@getalby.com — that’s your Lightning Address."
+          />
+
+          <HowItWorksStep
+            number="3"
+            title="Customize Your Widget"
+            description="Enter your Lightning Address, pick your button text and color to match your brand or aesthetic. You’ll instantly see a live preview of your widget."
+          />
+
+          <HowItWorksStep
+            number="4"
+            title="Copy the Code"
+            description="You’ll receive a small snippet of HTML code (just 3 lines). Copy this code and paste it into your website. If you're using platforms like WordPress, Notion, or Linktree, use a custom HTML block or embed widget. If your platform doesn’t support embeds, you can still link to a standalone tip page."
+          />
+
+          <HowItWorksStep
+            number="5"
+            title="Test Your Tipjar"
+            description="Open your site and click the button. You should see a QR code and Lightning prompt. If everything works, you're ready to share it with the world."
+          />
+
+          <HowItWorksStep
+            number="6"
+            title="Receive Tips Instantly"
+            description="Visitors can click the button or scan the QR code. They’ll be prompted to enter the amount they want to tip before completing the payment. Once sent, you'll receive the Bitcoin instantly via Lightning."
+          />
         </div>
       </div>
     </section>
