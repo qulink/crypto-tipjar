@@ -11,7 +11,7 @@ interface TipWidgetProps {
 export function TipWidget({
   lnAddress,
   buttonText = 'Tip Me',
-  buttonColor = '#f97316',
+  buttonColor = '#DCE546',
 }: TipWidgetProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [showThanks, setShowThanks] = useState(false)
@@ -57,7 +57,7 @@ export function TipWidget({
         style={{ backgroundColor: buttonColor }}
         className="px-4 py-2 text-white rounded-lg hover:opacity-90 transition-opacity font-medium"
       >
-        ⚡ {buttonText}
+        {buttonText}
       </button>
 
       {isOpen && lightningUrl && (

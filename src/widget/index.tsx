@@ -6,22 +6,18 @@ import '../index.css'
 // Widget entry point for embedding
 function initTipWidget() {
   const containers = document.querySelectorAll('[id="tipjar"]')
-  
+
   containers.forEach((container) => {
     const element = container as HTMLElement
     const lnAddress = element.dataset.lnaddress
-    const buttonColor = element.dataset.color || '#f97316'
+    const buttonColor = element.dataset.color || '#DCE546'
     const buttonText = element.dataset.button || 'Tip Me'
-    
+
     if (lnAddress) {
       const root = ReactDOM.createRoot(element)
       root.render(
         <React.StrictMode>
-          <TipWidget
-            lnAddress={lnAddress}
-            buttonColor={buttonColor}
-            buttonText={buttonText}
-          />
+          <TipWidget lnAddress={lnAddress} buttonColor={buttonColor} buttonText={buttonText} />
         </React.StrictMode>
       )
     }
@@ -42,5 +38,5 @@ const observer = new MutationObserver(() => {
 
 observer.observe(document.body, {
   childList: true,
-  subtree: true
+  subtree: true,
 })

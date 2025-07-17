@@ -9,7 +9,8 @@ import { Footer } from './components/Footer'
 function App() {
   const [lnAddress, setLnAddress] = useState('')
   const [buttonText, setButtonText] = useState('Tip Me')
-  const [buttonColor, setButtonColor] = useState('#f97316')
+  const [buttonColor, setButtonColor] = useState('#4F46E5')
+  const [fontColor, setFontColor] = useState('#ffffff')
 
   return (
     <div className="min-h-screen">
@@ -25,6 +26,8 @@ function App() {
           setButtonText={setButtonText}
           buttonColor={buttonColor}
           setButtonColor={setButtonColor}
+          fontColor={fontColor}
+          setFontColor={setFontColor}
         />
         <FAQ />
       </main>

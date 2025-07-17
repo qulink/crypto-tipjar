@@ -14,8 +14,7 @@ export function HowItWorks() {
         <div className="text-center mb-16">
           <h2 className="text-4xl font-display font-bold mb-4">How It Works</h2>
           <p className="text-xl font-body text-white/80 max-w-2xl mx-auto">
-            Get your Lightning tip widget up and running in just a few steps — no coding skills
-            needed.
+            Get your Kryptip widget up and running in just a few steps — no coding skills needed.
           </p>
         </div>
 
