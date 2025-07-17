@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { QRCodeSVG } from 'qrcode.react'
-import { encode } from 'js-lnurl'
+import { bech32 } from 'bech32'
 
 interface TipWidgetProps {
   lnAddress: string
@@ -8,17 +8,32 @@ interface TipWidgetProps {
   buttonColor?: string
 }
 
-export function TipWidget({ lnAddress, buttonText = 'Tip Me', buttonColor = '#f97316' }: TipWidgetProps) {
+export function TipWidget({
+  lnAddress,
+  buttonText = 'Tip Me',
+  buttonColor = '#f97316',
+}: TipWidgetProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [showThanks, setShowThanks] = useState(false)
 
-  if (!lnAddress) {
-    return null
-  }
+  // Defensive check: show nothing if lnAddress is completely empty
+  if (!lnAddress) return null
 
-  // Convert Lightning address to LNURL
-  const lnurl = encode(`https://${lnAddress.split('@')[1]}/.well-known/lnurlp/${lnAddress.split('@')[0]}`)
-  const lightningUrl = `lightning:${lnurl}`
+  // Try to generate the LNURL only if lnAddress is in valid format
+  const [name, domain] = lnAddress.split('@')
+  let lightningUrl: string | null = null
+
+  if (name && domain) {
+    try {
+      const url = `https://${domain}/.well-known/lnurlp/${name}`
+      const words = bech32.toWords(Buffer.from(url, 'utf8'))
+      const lnurl = bech32.encode('lnurl', words)
+      lightningUrl = `lightning:${lnurl}`
+    } catch (err) {
+      console.error('LNURL generation failed:', err)
+      lightningUrl = null
+    }
+  }
 
   const handleOpenWallet = () => {
     setShowThanks(true)
@@ -45,7 +60,7 @@ export function TipWidget({ lnAddress, buttonText = 'Tip Me', buttonColor = '#f9
         ⚡ {buttonText}
       </button>
 
-      {isOpen && (
+      {isOpen && lightningUrl && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
           onClick={handleOverlayClick}
@@ -68,19 +83,13 @@ export function TipWidget({ lnAddress, buttonText = 'Tip Me', buttonColor = '#f9
                     ×
                   </button>
                 </div>
-                
+
                 <div className="bg-white p-4 rounded-lg mb-4">
-                  <QRCodeSVG
-                    value={lightningUrl}
-                    size={200}
-                    className="mx-auto"
-                  />
+                  <QRCodeSVG value={lightningUrl} size={200} className="mx-auto" />
                 </div>
-                
-                <p className="text-sm text-gray-600 mb-4">
-                  Scan with your Lightning wallet
-                </p>
-                
+
+                <p className="text-sm text-gray-600 mb-4">Scan with your Lightning wallet</p>
+
                 <a
                   href={lightningUrl}
                   onClick={handleOpenWallet}
@@ -88,14 +97,16 @@ export function TipWidget({ lnAddress, buttonText = 'Tip Me', buttonColor = '#f9
                 >
                   Open in Wallet
                 </a>
-                
-                <p className="text-xs text-gray-500 mt-4">
-                  Powered by Lightning Network
-                </p>
+
+                <p className="text-xs text-gray-500 mt-4">Powered by Lightning Network</p>
               </div>
             )}
           </div>
         </div>
+      )}
+
+      {isOpen && !lightningUrl && (
+        <div className="text-center text-red-500 mt-4">⚠️ Invalid Lightning address</div>
       )}
     </>
   )

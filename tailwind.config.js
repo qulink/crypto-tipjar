@@ -9,6 +9,11 @@ export default {
       colors: {
         'lightning': '#f7931a',
         'bitcoin': '#ff9500'
+      },
+      fontFamily: {
+        'display': ['Space Grotesk', 'sans-serif'],
+        'body': ['Roboto', 'sans-serif'],
+        'sans': ['Roboto', 'sans-serif'], // Default sans-serif
       }
     },
   },
