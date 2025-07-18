@@ -6,6 +6,11 @@ export function Footer() {
           {/* Branding and description */}
           <div className="md:max-w-md">
             <div className="flex items-center mb-4">
+              <img
+                src="/logo.png"
+                alt="Logo"
+                className="h-8 w-8 rounded-full object-cover mr-3"
+              />
               <span className="text-2xl font-display font-bold">Kryptip</span>
             </div>
             <p className="font-body text-gray-400">
