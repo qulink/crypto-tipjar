@@ -24,7 +24,7 @@ export function HowItWorks() {
           <HowItWorksStep
             number="1"
             title="Get a Lightning Address"
-            description="Sign up for a wallet like Alby, Wallet of Satoshi, or Phoenix — these support Lightning Addresses. You can also search for other Bitcoin wallets with Lightning support."
+            description="Sign up for a wallet like Wallet of Satoshi, or Misty Breez — these support Lightning Addresses. You can also search for other Bitcoin wallets with Lightning support."
           />
 
           <HowItWorksStep

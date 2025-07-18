@@ -8,7 +8,7 @@ export function FAQ() {
     {
       question: 'What is a Lightning Address?',
       answer:
-        'A Lightning Address is like an email address for Bitcoin. It allows people to send you Bitcoin instantly over the Lightning Network. Popular providers include Alby, Strike, and CashApp.',
+        'A Lightning Address is like an email address for Bitcoin. It allows people to send you Bitcoin instantly over the Lightning Network.',
     },
     {
       question: 'Are there any fees?',
@@ -38,7 +38,7 @@ export function FAQ() {
     {
       question: "What if I don't have a Lightning wallet?",
       answer:
-        "You'll need a Lightning wallet to receive tips. We recommend starting with Alby (web), Strike (mobile), or CashApp (US only) as they're beginner-friendly and provide Lightning addresses.",
+        "You'll need a Lightning wallet that gives you a Lightning Address — not just a QR code. The widget needs a Lightning Address (like name@domain.com) to work, because it can’t read or generate QR codes directly.",
     },
     {
       question: 'Can I use this on multiple websites?',

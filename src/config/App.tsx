@@ -9,13 +9,13 @@ import { Footer } from './components/Footer'
 function App() {
   const [lnAddress, setLnAddress] = useState('')
   const [buttonText, setButtonText] = useState('Tip Me')
-  const [buttonColor, setButtonColor] = useState('#4F46E5')
-  const [fontColor, setFontColor] = useState('#ffffff')
+  const [buttonColor, setButtonColor] = useState('#38C5FE')
+  const [fontColor, setFontColor] = useState('#FFFFFF')
 
   return (
     <div className="min-h-screen">
       <Navigation />
-      
+
       <main>
         <Hero />
         <HowItWorks />
@@ -31,7 +31,7 @@ function App() {
         />
         <FAQ />
       </main>
-      
+
       <Footer />
     </div>
   )

@@ -64,19 +64,35 @@ export function GetATipjar({
                   type="text"
                   value={lnAddress}
                   onChange={(e) => setLnAddress(e.target.value)}
-                  placeholder="your@getalby.com"
-                  className="w-full px-4 py-3 border border-gray-600 bg-[#24292e] rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#DCE546] focus:border-transparent"
+                  placeholder="your@example.com"
+                  className="w-full px-4 py-3 border border-gray-600 bg-[#24292e] rounded-lg text-white focus:outline-none focus:border-transparent relative"
+                  style={{
+                    '--tw-ring-color': 'transparent',
+                  }}
+                  onFocus={(e) => {
+                    e.target.style.border = '2px solid transparent'
+                    e.target.style.backgroundImage =
+                      'linear-gradient(#24292e, #24292e), linear-gradient(45deg, #38C5FE, #FA98F8)'
+                    e.target.style.backgroundOrigin = 'border-box'
+                    e.target.style.backgroundClip = 'padding-box, border-box'
+                  }}
+                  onBlur={(e) => {
+                    e.target.style.border = '1px solid rgb(75 85 99)'
+                    e.target.style.backgroundImage = 'none'
+                    e.target.style.backgroundOrigin = 'initial'
+                    e.target.style.backgroundClip = 'initial'
+                  }}
                 />
                 <p className="text-sm font-body text-white/60 mt-2">
                   Don't have one? Get started with{' '}
                   <a
-                    href="https://getalby.com"
+                    href="https://breez.technology/misty/"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="font-medium"
-                    style={{ color: '#DCE546' }}
+                    style={{ color: '#FA98F8' }}
                   >
-                    Alby
+                    Misty Breez
                   </a>{' '}
                   .
                 </p>
@@ -89,7 +105,23 @@ export function GetATipjar({
                   value={buttonText}
                   onChange={(e) => setButtonText(e.target.value)}
                   placeholder="Tip Me"
-                  className="w-full px-4 py-3 border border-gray-600 bg-[#24292e] rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#DCE546] focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-600 bg-[#24292e] rounded-lg text-white focus:outline-none focus:border-transparent relative"
+                  style={{
+                    '--tw-ring-color': 'transparent',
+                  }}
+                  onFocus={(e) => {
+                    e.target.style.border = '2px solid transparent'
+                    e.target.style.backgroundImage =
+                      'linear-gradient(#24292e, #24292e), linear-gradient(45deg, #38C5FE, #FA98F8)'
+                    e.target.style.backgroundOrigin = 'border-box'
+                    e.target.style.backgroundClip = 'padding-box, border-box'
+                  }}
+                  onBlur={(e) => {
+                    e.target.style.border = '1px solid rgb(75 85 99)'
+                    e.target.style.backgroundImage = 'none'
+                    e.target.style.backgroundOrigin = 'initial'
+                    e.target.style.backgroundClip = 'initial'
+                  }}
                 />
               </div>
 
@@ -109,8 +141,24 @@ export function GetATipjar({
                         type="text"
                         value={buttonColor}
                         onChange={(e) => setButtonColor(e.target.value)}
-                        placeholder="#DCE546"
-                        className="flex-1 px-4 py-3 border border-gray-600 bg-[#24292e] rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#DCE546] focus:border-transparent"
+                        placeholder="#38C5FE"
+                        className="flex-1 px-4 py-3 border border-gray-600 bg-[#24292e] rounded-lg text-white focus:outline-none focus:border-transparent relative"
+                        style={{
+                          '--tw-ring-color': 'transparent',
+                        }}
+                        onFocus={(e) => {
+                          e.target.style.border = '2px solid transparent'
+                          e.target.style.backgroundImage =
+                            'linear-gradient(#24292e, #24292e), linear-gradient(45deg, #38C5FE, #FA98F8)'
+                          e.target.style.backgroundOrigin = 'border-box'
+                          e.target.style.backgroundClip = 'padding-box, border-box'
+                        }}
+                        onBlur={(e) => {
+                          e.target.style.border = '1px solid rgb(75 85 99)'
+                          e.target.style.backgroundImage = 'none'
+                          e.target.style.backgroundOrigin = 'initial'
+                          e.target.style.backgroundClip = 'initial'
+                        }}
                       />
                     </div>
                   </div>
@@ -130,7 +178,23 @@ export function GetATipjar({
                         value={fontColor}
                         onChange={(e) => setFontColor(e.target.value)}
                         placeholder="#000000"
-                        className="flex-1 px-4 py-3 border border-gray-600 bg-[#24292e] rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#DCE546] focus:border-transparent"
+                        className="flex-1 px-4 py-3 border border-gray-600 bg-[#24292e] rounded-lg text-white focus:outline-none focus:border-transparent relative"
+                        style={{
+                          '--tw-ring-color': 'transparent',
+                        }}
+                        onFocus={(e) => {
+                          e.target.style.border = '2px solid transparent'
+                          e.target.style.backgroundImage =
+                            'linear-gradient(#24292e, #24292e), linear-gradient(45deg, #38C5FE, #FA98F8)'
+                          e.target.style.backgroundOrigin = 'border-box'
+                          e.target.style.backgroundClip = 'padding-box, border-box'
+                        }}
+                        onBlur={(e) => {
+                          e.target.style.border = '1px solid rgb(75 85 99)'
+                          e.target.style.backgroundImage = 'none'
+                          e.target.style.backgroundOrigin = 'initial'
+                          e.target.style.backgroundClip = 'initial'
+                        }}
                       />
                     </div>
                   </div>
@@ -145,12 +209,18 @@ export function GetATipjar({
               <h3 className="text-2xl font-display font-semibold">Preview</h3>
               <div className="flex items-center gap-4">
                 <label className="text-sm font-medium">Show Code</label>
-                <input
-                  type="checkbox"
-                  checked={showCode}
-                  onChange={() => setShowCode(!showCode)}
-                  className="w-5 h-5 text-[#DCE546] border-gray-300 rounded"
-                />
+                <button
+                  onClick={() => setShowCode(!showCode)}
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                    showCode ? 'bg-gradient-to-r from-[#38C5FE] to-[#FA98F8]' : 'bg-gray-600'
+                  }`}
+                >
+                  <span
+                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition ${
+                      showCode ? 'translate-x-6' : 'translate-x-1'
+                    }`}
+                  />
+                </button>
               </div>
             </div>
 
@@ -173,9 +243,22 @@ export function GetATipjar({
                 </pre>
                 <button
                   onClick={copyCode}
-                  className="absolute top-2 right-2 bg-[#DCE546] text-black font-medium px-3 py-1 text-xs rounded-md hover:bg-yellow-300"
+                  className="absolute top-2 right-2 p-2 text-white hover:text-gray-300 transition-colors"
+                  title="Copy to clipboard"
                 >
-                  Copy
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                  </svg>
                 </button>
               </div>
             )}

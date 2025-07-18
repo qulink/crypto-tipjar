@@ -55,13 +55,13 @@ export function Navigation() {
             overflow-hidden whitespace-nowrap
           `}
         >
-          <a href="#how-it-works" className="transition-colors duration-300">
+          <a href="#how-it-works" className="transition-colors duration-300 hover:text-white/70">
             HOW TO
           </a>
-          <a href="#get-a-tipjar" className="transition-colors duration-300">
+          <a href="#get-a-tipjar" className="transition-colors duration-300 hover:text-white/70">
             GET
           </a>
-          <a href="#faq" className="transition-colors duration-300">
+          <a href="#faq" className="transition-colors duration-300 hover:text-white/70">
             FAQ
           </a>
         </div>
