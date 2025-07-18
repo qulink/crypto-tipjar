@@ -30,7 +30,7 @@ export function Navigation() {
       {/* Actual navbar (on top, but not full width!) */}
       <nav
         className={`fixed z-50 top-6 left-1/2 transform -translate-x-1/2
-          h-16 rounded-full bg-[#231e72]
+          h-16 rounded-full bg-[#000000]
           transition-all duration-300 ease-in-out px-4 overflow-hidden
           flex items-center
           ${expanded ? 'w-[320px] gap-4 justify-start' : 'w-16 justify-center'}

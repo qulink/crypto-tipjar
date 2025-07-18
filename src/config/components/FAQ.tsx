@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { StarryBackground } from './StarryBackground'
 
 export function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
@@ -47,7 +48,8 @@ export function FAQ() {
   ]
 
   return (
-    <section id="faq" className="py-20" style={{ backgroundColor: '#181b1f' }}>
+    <section id="faq" className="py-20 relative" style={{ backgroundColor: '#000000' }}>
+      <StarryBackground />
       <div className="container mx-auto px-6 sm:px-12 md:px-16">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-display font-bold text-white mb-4">
@@ -63,7 +65,7 @@ export function FAQ() {
             <div key={index} className="mb-4">
               <button
                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                className="w-full text-left bg-[#24292e] hover:bg-[#2f353b] rounded-lg p-6 transition-colors"
+                className="w-full text-left bg-[#181b1f] hover:bg-[#2f353b] rounded-lg p-6 transition-colors"
               >
                 <div className="flex justify-between items-center">
                   <h3 className="text-lg font-display font-semibold text-white pr-4">

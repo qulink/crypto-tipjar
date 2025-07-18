@@ -1,5 +1,6 @@
 import { TipWidget } from '../../widget/TipWidget'
 import { useState } from 'react'
+import { StarryBackground } from './StarryBackground'
 
 interface GetATipjarProps {
   lnAddress: string
@@ -39,7 +40,8 @@ export function GetATipjar({
   }
 
   return (
-    <section id="get-a-tipjar" className="py-20" style={{ backgroundColor: '#181b1f' }}>
+    <section id="get-a-tipjar" className="py-20 relative" style={{ backgroundColor: '#000000' }}>
+      <StarryBackground />
       <div className="container mx-auto px-6 sm:px-12 md:px-16">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-display font-bold text-white mb-4">Create Your Tipjar</h2>
@@ -50,7 +52,7 @@ export function GetATipjar({
 
         <div className="max-w-3xl mx-auto space-y-10">
           {/* Configuration Panel */}
-          <div className="bg-[#24292e] rounded-xl p-8 text-white">
+          <div className="bg-[#181b1f] rounded-xl p-8 text-white">
             <h3 className="text-2xl font-display font-semibold mb-6">Configure Your Widget</h3>
 
             <div className="space-y-6">
@@ -63,7 +65,7 @@ export function GetATipjar({
                   value={lnAddress}
                   onChange={(e) => setLnAddress(e.target.value)}
                   placeholder="your@getalby.com"
-                  className="w-full px-4 py-3 border border-gray-600 bg-[#181b1f] rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#DCE546] focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-600 bg-[#24292e] rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#DCE546] focus:border-transparent"
                 />
                 <p className="text-sm font-body text-white/60 mt-2">
                   Don't have one? Get started with{' '}
@@ -87,7 +89,7 @@ export function GetATipjar({
                   value={buttonText}
                   onChange={(e) => setButtonText(e.target.value)}
                   placeholder="Tip Me"
-                  className="w-full px-4 py-3 border border-gray-600 bg-[#181b1f] rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#DCE546] focus:border-transparent"
+                  className="w-full px-4 py-3 border border-gray-600 bg-[#24292e] rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#DCE546] focus:border-transparent"
                 />
               </div>
 
@@ -108,7 +110,7 @@ export function GetATipjar({
                         value={buttonColor}
                         onChange={(e) => setButtonColor(e.target.value)}
                         placeholder="#DCE546"
-                        className="flex-1 px-4 py-3 border border-gray-600 bg-[#181b1f] rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#DCE546] focus:border-transparent"
+                        className="flex-1 px-4 py-3 border border-gray-600 bg-[#24292e] rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#DCE546] focus:border-transparent"
                       />
                     </div>
                   </div>
@@ -128,7 +130,7 @@ export function GetATipjar({
                         value={fontColor}
                         onChange={(e) => setFontColor(e.target.value)}
                         placeholder="#000000"
-                        className="flex-1 px-4 py-3 border border-gray-600 bg-[#181b1f] rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#DCE546] focus:border-transparent"
+                        className="flex-1 px-4 py-3 border border-gray-600 bg-[#24292e] rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-[#DCE546] focus:border-transparent"
                       />
                     </div>
                   </div>
@@ -140,7 +142,7 @@ export function GetATipjar({
           {/* Live Preview + Code */}
           <div className="bg-[#24292e] rounded-xl p-8 text-white">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-2xl font-display font-semibold">Live Preview</h3>
+              <h3 className="text-2xl font-display font-semibold">Preview</h3>
               <div className="flex items-center gap-4">
                 <label className="text-sm font-medium">Show Code</label>
                 <input

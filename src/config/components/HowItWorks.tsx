@@ -1,4 +1,5 @@
 import { HowItWorksStep } from './HowItWorksStep'
+import { StarryBackground } from './StarryBackground'
 
 export function HowItWorks() {
   return (
@@ -6,10 +7,11 @@ export function HowItWorks() {
       id="how-it-works"
       className="py-20 relative text-white"
       style={{
-        backgroundColor: '#181b1f',
-        backgroundImage: 'linear-gradient(to top, #181b1f 80%, transparent 100%)',
+        backgroundColor: '#000000',
+        backgroundImage: 'linear-gradient(to top, #000000 80%, transparent 100%)',
       }}
     >
+      <StarryBackground />
       <div className="container mx-auto px-6 sm:px-12 md:px-16">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-display font-bold mb-4">How It Works</h2>
@@ -18,7 +20,7 @@ export function HowItWorks() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-8 lg:gap-x-1 lg:px-12">
           <HowItWorksStep
             number="1"
             title="Get a Lightning Address"
@@ -28,7 +30,7 @@ export function HowItWorks() {
           <HowItWorksStep
             number="2"
             title="Find Your Address"
-            description="If you already have a Lightning-enabled wallet, check the app’s settings, profile page, or receive tab. Look for something that resembles an email address, such as yourname@getalby.com — that’s your Lightning Address."
+            description="If you already have a Lightning-enabled wallet, check the app’s settings, profile page, or receive tab. Look for something that resembles an email address — that’s your Lightning Address."
           />
 
           <HowItWorksStep
@@ -40,7 +42,7 @@ export function HowItWorks() {
           <HowItWorksStep
             number="4"
             title="Copy the Code"
-            description="You’ll receive a small snippet of HTML code (just 3 lines). Copy this code and paste it into your website. If you're using platforms like WordPress, Notion, or Linktree, use a custom HTML block or embed widget. If your platform doesn’t support embeds, you can still link to a standalone tip page."
+            description="You’ll receive a small snippet of HTML code. Copy this code and paste it into your website. If you're using platforms like WordPress, use a custom HTML block or embed widget. If your platform doesn’t support embeds, you can still link to a standalone tip page."
           />
 
           <HowItWorksStep

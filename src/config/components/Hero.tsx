@@ -29,14 +29,14 @@ export function Hero() {
                   href="#get-a-tipjar"
                   className="text-gray-900 px-6 py-3 rounded-lg text-base font-display font-semibold uppercase transition duration-200 ease-in-out shadow-sm hover:shadow-md"
                   style={{
-                    backgroundColor: '#DCE546',
+                    backgroundColor: '#E375E2',
                     transition: 'all 0.2s ease-in-out',
                   }}
                   onMouseEnter={(e) => {
-                    ;(e.currentTarget as HTMLElement).style.backgroundColor = '#cbdc3f'
+                    ;(e.currentTarget as HTMLElement).style.backgroundColor = '#FA98F8'
                   }}
                   onMouseLeave={(e) => {
-                    ;(e.currentTarget as HTMLElement).style.backgroundColor = '#DCE546'
+                    ;(e.currentTarget as HTMLElement).style.backgroundColor = '#E375E2'
                   }}
                 >
                   Create Your Tipjar
@@ -51,7 +51,7 @@ export function Hero() {
       <div
         className="absolute bottom-0 left-0 w-full h-32 pointer-events-none"
         style={{
-          backgroundImage: 'linear-gradient(to bottom, transparent, #181b1f)',
+          backgroundImage: 'linear-gradient(to bottom, transparent, #000000)',
         }}
       />
     </section>
