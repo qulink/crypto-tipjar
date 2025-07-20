@@ -8,7 +8,7 @@ import { Footer } from './components/Footer'
 
 function App() {
   const [lnAddress, setLnAddress] = useState('')
-  const [buttonText, setButtonText] = useState('Tip Me')
+  const [buttonText, setButtonText] = useState('Donate Bitcoin')
   const [buttonColor, setButtonColor] = useState('#38C5FE')
   const [fontColor, setFontColor] = useState('#FFFFFF')
 

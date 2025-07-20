@@ -11,7 +11,7 @@ function initTipWidget() {
     const element = container as HTMLElement
     const lnAddress = element.dataset.lnaddress
     const buttonColor = element.dataset.color || '#DCE546'
-    const buttonText = element.dataset.button || 'Tip Me'
+    const buttonText = element.dataset.button || 'Donate Bitcoin'
 
     if (lnAddress) {
       const root = ReactDOM.createRoot(element)

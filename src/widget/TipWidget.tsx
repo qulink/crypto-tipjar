@@ -10,7 +10,7 @@ interface TipWidgetProps {
 
 export function TipWidget({
   lnAddress,
-  buttonText = 'Tip Me',
+  buttonText = 'Donate Bitcoin',
   buttonColor = '#DCE546',
 }: TipWidgetProps) {
   const [isOpen, setIsOpen] = useState(false)
@@ -26,7 +26,7 @@ export function TipWidget({
   if (name && domain) {
     try {
       const url = `https://${domain}/.well-known/lnurlp/${name}`
-      const words = bech32.toWords(Buffer.from(url, 'utf8'))
+      const words = bech32.toWords(new TextEncoder().encode(url))
       const lnurl = bech32.encode('lnurl', words)
       lightningUrl = `lightning:${lnurl}`
     } catch (err) {

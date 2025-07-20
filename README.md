@@ -26,11 +26,13 @@ npm run build:site
 Generate your embed code at the configurator site, then embed like this:
 
 ```html
-<link rel="stylesheet" href="https://tipjar.vercel.app/embed.css">
-<div id="tipjar" 
-     data-lnaddress="your@getalby.com" 
-     data-color="#f97316" 
-     data-button="Tip Me"></div>
+<link rel="stylesheet" href="https://tipjar.vercel.app/embed.css" />
+<div
+  id="tipjar"
+  data-lnaddress="your@getalby.com"
+  data-color="#f97316"
+  data-button="Donate Bitcoin"
+></div>
 <script async src="https://tipjar.vercel.app/embed.js"></script>
 ```
 

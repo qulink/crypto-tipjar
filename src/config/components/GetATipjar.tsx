@@ -68,7 +68,7 @@ export function GetATipjar({
                   className="w-full px-4 py-3 border border-gray-600 bg-[#24292e] rounded-lg text-white focus:outline-none focus:border-transparent relative"
                   style={{
                     '--tw-ring-color': 'transparent',
-                  }}
+                  } as React.CSSProperties}
                   onFocus={(e) => {
                     e.target.style.border = '2px solid transparent'
                     e.target.style.backgroundImage =
@@ -108,7 +108,7 @@ export function GetATipjar({
                   className="w-full px-4 py-3 border border-gray-600 bg-[#24292e] rounded-lg text-white focus:outline-none focus:border-transparent relative"
                   style={{
                     '--tw-ring-color': 'transparent',
-                  }}
+                  } as React.CSSProperties}
                   onFocus={(e) => {
                     e.target.style.border = '2px solid transparent'
                     e.target.style.backgroundImage =
@@ -145,7 +145,7 @@ export function GetATipjar({
                         className="flex-1 px-4 py-3 border border-gray-600 bg-[#24292e] rounded-lg text-white focus:outline-none focus:border-transparent relative"
                         style={{
                           '--tw-ring-color': 'transparent',
-                        }}
+                        } as React.CSSProperties}
                         onFocus={(e) => {
                           e.target.style.border = '2px solid transparent'
                           e.target.style.backgroundImage =
@@ -181,7 +181,7 @@ export function GetATipjar({
                         className="flex-1 px-4 py-3 border border-gray-600 bg-[#24292e] rounded-lg text-white focus:outline-none focus:border-transparent relative"
                         style={{
                           '--tw-ring-color': 'transparent',
-                        }}
+                        } as React.CSSProperties}
                         onFocus={(e) => {
                           e.target.style.border = '2px solid transparent'
                           e.target.style.backgroundImage =

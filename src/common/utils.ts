@@ -10,5 +10,5 @@ export function isValidHexColor(color: string): boolean {
 }
 
 export function sanitizeButtonText(text: string): string {
-  return text.replace(/[<>]/g, '').trim() || 'Tip Me'
+  return text.replace(/[<>]/g, '').trim() || 'Donate Bitcoin'
 }
