@@ -104,7 +104,7 @@ export function GetATipjar({
                   type="text"
                   value={buttonText}
                   onChange={(e) => setButtonText(e.target.value)}
-                  placeholder="Tip Me"
+                  placeholder="Donate Bitcoin"
                   className="w-full px-4 py-3 border border-gray-600 bg-[#24292e] rounded-lg text-white focus:outline-none focus:border-transparent relative"
                   style={{
                     '--tw-ring-color': 'transparent',
