@@ -6,12 +6,14 @@ interface TipWidgetProps {
   lnAddress: string
   buttonText?: string
   buttonColor?: string
+  fontColor?: string
 }
 
 export function TipWidget({
   lnAddress,
   buttonText = 'Donate Bitcoin',
   buttonColor = '#DCE546',
+  fontColor = '#FFFFFF',
 }: TipWidgetProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [showThanks, setShowThanks] = useState(false)
@@ -54,8 +56,8 @@ export function TipWidget({
     <>
       <button
         onClick={() => setIsOpen(true)}
-        style={{ backgroundColor: buttonColor }}
-        className="px-4 py-2 text-white rounded-lg hover:opacity-90 transition-opacity font-medium"
+        style={{ backgroundColor: buttonColor, color: fontColor }}
+        className="px-4 py-2 rounded-lg hover:opacity-90 transition-opacity font-medium"
       >
         {buttonText}
       </button>

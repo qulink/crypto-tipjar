@@ -1,6 +1,7 @@
 import { TipWidget } from '../../widget/TipWidget'
 import { useState } from 'react'
 import { StarryBackground } from './StarryBackground'
+import { validateLightningAddress } from '../../common/utils'
 
 interface GetATipjarProps {
   lnAddress: string
@@ -24,6 +25,7 @@ export function GetATipjar({
   setFontColor,
 }: GetATipjarProps) {
   const [showCode, setShowCode] = useState(false)
+  const isValidAddress = validateLightningAddress(lnAddress)
 
   const codeSnippet = `
 <script src="https://cdn.kryptip.com/widget.js"></script>
@@ -83,19 +85,25 @@ export function GetATipjar({
                     e.target.style.backgroundClip = 'initial'
                   }}
                 />
-                <p className="text-sm font-body text-white/60 mt-2">
-                  Don't have one? Get started with{' '}
-                  <a
-                    href="https://breez.technology/misty/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="font-medium"
-                    style={{ color: '#FA98F8' }}
-                  >
-                    Misty Breez
-                  </a>{' '}
-                  .
-                </p>
+                {lnAddress && !isValidAddress ? (
+                  <p className="text-sm font-body text-red-400 mt-2">
+                    ⚠️ Please enter a valid Lightning Address (e.g., user@domain.com)
+                  </p>
+                ) : (
+                  <p className="text-sm font-body text-white/60 mt-2">
+                    Don't have one? Get started with{' '}
+                    <a
+                      href="https://breez.technology/misty/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="font-medium"
+                      style={{ color: '#FA98F8' }}
+                    >
+                      Misty Breez
+                    </a>{' '}
+                    .
+                  </p>
+                )}
               </div>
 
               <div>
@@ -210,9 +218,10 @@ export function GetATipjar({
               <div className="flex items-center gap-4">
                 <label className="text-sm font-medium">Show Code</label>
                 <button
-                  onClick={() => setShowCode(!showCode)}
+                  onClick={() => isValidAddress && setShowCode(!showCode)}
+                  disabled={!isValidAddress}
                   className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                    showCode ? 'bg-gradient-to-r from-[#38C5FE] to-[#FA98F8]' : 'bg-gray-600'
+                    showCode && isValidAddress ? 'bg-gradient-to-r from-[#38C5FE] to-[#FA98F8]' : isValidAddress ? 'bg-gray-600' : 'bg-gray-800 opacity-50 cursor-not-allowed'
                   }`}
                 >
                   <span
@@ -230,6 +239,7 @@ export function GetATipjar({
                   lnAddress={lnAddress}
                   buttonText={buttonText}
                   buttonColor={buttonColor}
+                  fontColor={fontColor}
                 />
               ) : (
                 <p className="font-body text-white/60">Enter a Lightning address to see preview</p>
