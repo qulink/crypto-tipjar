@@ -8,7 +8,7 @@ export function FAQ() {
     {
       question: 'What do I need to receive tips?',
       answer:
-        'You need a Bitcoin wallet that supports the Lightning Network. You can either use a custodial wallet that gives you a Lightning Address (like Wallet of Satoshi or Misty Breez), or a non-custodial wallet that gives you a Bolt12 offer (like Phoenix). You can enter either or both when creating your widget.',
+        'You need a Bitcoin wallet that supports the Lightning Network. You can either use a custodial wallet that gives you a Lightning Address (like Wallet of Satoshi or Misty Breez), or a wallet that gives you a Bolt12 offer (like the non-custodial wallet by Phoenix). You can enter either or both when creating your widget.',
     },
     {
       question: 'What is a Lightning Address?',
@@ -25,6 +25,12 @@ export function FAQ() {
       answer:
         'A Lightning Address is easier for humans to read and is powered by a server on the internet, making it ideal for custodial wallets. Bolt12 offers are more technical but privacy-friendly and don’t require a server, which makes them ideal for non-custodial wallets. Both can be used to receive Lightning payments.',
     },
+    {
+      question: 'What’s the difference between a custodial and non-custodial wallet?',
+      answer:
+        'A custodial wallet is managed by a third party who holds your funds and keys for you—easy to use but with less control. A non-custodial wallet gives you full control of your keys and funds, offering more privacy and sovereignty but requiring more responsibility. Both can support Lightning payments.',
+    },
+
     {
       question: 'Are there any fees?',
       answer:

@@ -145,8 +145,7 @@ export function GetATipjar({
                   </p>
                 ) : (
                   <p className="text-sm font-body text-white/60 mt-2">
-                    Compatible with certain modern non-custodial wallets like Phoenix. Provides
-                    enhanced privacy.
+                    Compatible with certain modern wallets like Phoenix. Provides enhanced privacy.
                   </p>
                 )}
               </div>

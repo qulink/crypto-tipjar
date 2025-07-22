@@ -24,7 +24,7 @@ export function HowItWorks() {
           <HowItWorksStep
             number="1"
             title="Choose Your Wallet"
-            description="To receive tips, you'll need a Bitcoin wallet that supports Lightning. Custodial wallets like Wallet of Satoshi support Lightning Addresses. Non-custodial wallets like Phoenix support Bolt12 offers."
+            description="To receive tips, you'll need a Bitcoin wallet that supports Lightning. Custodial wallets like Wallet of Satoshi support Lightning Addresses. Wallets like Phoenix also support Bolt12 offers."
           />
 
           <HowItWorksStep
@@ -36,7 +36,7 @@ export function HowItWorks() {
           <HowItWorksStep
             number="3"
             title="Customize Your Widget"
-            description="Paste your address and/or offer into the configurator. Pick your button text and color to match your brand. You’ll instantly see a live preview of your widget."
+            description="Paste your Lightning address or Bolt12 code into the configurator. Pick your button text and color to match your brand. You’ll instantly see a live preview of your widget."
           />
 
           <HowItWorksStep
