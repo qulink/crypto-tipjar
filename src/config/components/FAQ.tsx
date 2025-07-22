@@ -18,7 +18,7 @@ export function FAQ() {
     {
       question: 'What is a Bolt12 offer?',
       answer:
-        'A Bolt12 offer is a reusable string (starting with lno1...) that lets people send you Bitcoin tips over the Lightning Network. It’s supported by non-custodial wallets like Phoenix and doesn’t require a server or third-party service.',
+        'A Bolt12 offer is a reusable string (starting with lno1...) that lets people send you Bitcoin tips over the Lightning Network. It’s supported by wallets like Phoenix and doesn’t require a server or third-party service.',
     },
     {
       question: 'What’s the difference between a Lightning Address and a Bolt12 offer?',
