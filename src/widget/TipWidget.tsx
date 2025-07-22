@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { QRCodeSVG } from 'qrcode.react'
 import { bech32 } from 'bech32'
+import { validateBolt12Offer } from '../common/utils'
 
 interface TipWidgetProps {
-  lnAddress: string
+  lnAddress?: string
+  bolt12Offer?: string
   buttonText?: string
   buttonColor?: string
   fontColor?: string
@@ -11,37 +13,59 @@ interface TipWidgetProps {
 
 export function TipWidget({
   lnAddress,
+  bolt12Offer,
   buttonText = 'Donate Bitcoin',
   buttonColor = '#DCE546',
   fontColor = '#FFFFFF',
 }: TipWidgetProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [showThanks, setShowThanks] = useState(false)
+  const [selectedWalletType, setSelectedWalletType] = useState<'lnurl' | 'bolt12' | null>(null)
 
-  // Defensive check: show nothing if lnAddress is completely empty
-  if (!lnAddress) return null
+  // Defensive check: show nothing if no valid payment method is provided
+  if (!lnAddress && !bolt12Offer) return null
 
-  // Try to generate the LNURL only if lnAddress is in valid format
-  const [name, domain] = lnAddress.split('@')
-  let lightningUrl: string | null = null
+  // Validate and prepare payment methods
+  let lnurlUri: string | null = null
+  let bolt12Uri: string | null = null
 
-  if (name && domain) {
-    try {
-      const url = `https://${domain}/.well-known/lnurlp/${name}`
-      const words = bech32.toWords(new TextEncoder().encode(url))
-      const lnurl = bech32.encode('lnurl', words)
-      lightningUrl = `lightning:${lnurl}`
-    } catch (err) {
-      console.error('LNURL generation failed:', err)
-      lightningUrl = null
+  // Generate LNURL if valid Lightning Address is provided
+  if (lnAddress) {
+    const [name, domain] = lnAddress.split('@')
+    if (name && domain) {
+      try {
+        const url = `https://${domain}/.well-known/lnurlp/${name}`
+        const words = bech32.toWords(new TextEncoder().encode(url))
+        const lnurl = bech32.encode('lnurl', words)
+        lnurlUri = `lightning:${lnurl}`
+      } catch (err) {
+        console.error('LNURL generation failed:', err)
+        lnurlUri = null
+      }
     }
   }
 
-  const handleOpenWallet = () => {
+  // Validate Bolt12 offer if provided
+  if (bolt12Offer && validateBolt12Offer(bolt12Offer)) {
+    bolt12Uri = `lightning:${bolt12Offer}`
+  }
+
+  const hasLnurl = !!lnurlUri
+  const hasBolt12 = !!bolt12Uri
+  const hasBothOptions = hasLnurl && hasBolt12
+
+  const handleOpenWallet = (walletType?: 'lnurl' | 'bolt12') => {
+    if (walletType) {
+      const uri = walletType === 'lnurl' ? lnurlUri : bolt12Uri
+      if (uri) {
+        window.open(uri, '_blank')
+      }
+    }
     setShowThanks(true)
     setTimeout(() => {
       setShowThanks(false)
       setIsOpen(false)
+      setSelectedWalletType(null)
     }, 3000)
   }
 
@@ -49,7 +73,26 @@ export function TipWidget({
     if (e.target === e.currentTarget) {
       setIsOpen(false)
       setShowThanks(false)
+      setSelectedWalletType(null)
     }
+  }
+
+  const handleWalletTypeSelection = (type: 'lnurl' | 'bolt12') => {
+    setSelectedWalletType(type)
+  }
+
+  const getCurrentUri = () => {
+    if (hasBothOptions) {
+      return selectedWalletType === 'lnurl' ? lnurlUri : selectedWalletType === 'bolt12' ? bolt12Uri : null
+    }
+    return lnurlUri || bolt12Uri
+  }
+
+  const getCurrentWalletType = () => {
+    if (hasBothOptions && selectedWalletType) {
+      return selectedWalletType
+    }
+    return hasLnurl ? 'lnurl' : 'bolt12'
   }
 
   return (
@@ -62,7 +105,7 @@ export function TipWidget({
         {buttonText}
       </button>
 
-      {isOpen && lightningUrl && (
+      {isOpen && (hasLnurl || hasBolt12) && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
           onClick={handleOverlayClick}
@@ -74,10 +117,10 @@ export function TipWidget({
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">Thank you!</h3>
                 <p className="text-gray-600">Your support means everything</p>
               </div>
-            ) : (
+            ) : hasBothOptions && !selectedWalletType ? (
               <div className="text-center">
                 <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-lg font-semibold text-gray-900">Send Lightning Tip</h3>
+                  <h3 className="text-lg font-semibold text-gray-900">Choose Wallet Type</h3>
                   <button
                     onClick={() => setIsOpen(false)}
                     className="text-gray-400 hover:text-gray-600 text-xl"
@@ -86,29 +129,75 @@ export function TipWidget({
                   </button>
                 </div>
 
-                <div className="bg-white p-4 rounded-lg mb-4">
-                  <QRCodeSVG value={lightningUrl} size={200} className="mx-auto" />
+                <p className="text-sm text-gray-600 mb-6">Select your wallet compatibility:</p>
+
+                <div className="space-y-3">
+                  <button
+                    onClick={() => handleWalletTypeSelection('lnurl')}
+                    className="w-full bg-blue-500 hover:bg-blue-600 text-white px-4 py-3 rounded-lg transition-colors"
+                  >
+                    LNURL-compatible wallet
+                    <div className="text-xs opacity-90 mt-1">Wallet of Satoshi, Breez, etc.</div>
+                  </button>
+                  <button
+                    onClick={() => handleWalletTypeSelection('bolt12')}
+                    className="w-full bg-purple-500 hover:bg-purple-600 text-white px-4 py-3 rounded-lg transition-colors"
+                  >
+                    Bolt12-compatible wallet
+                    <div className="text-xs opacity-90 mt-1">Phoenix, CLN, etc.</div>
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="text-center">
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-lg font-semibold text-gray-900">Send Lightning Tip</h3>
+                  <div className="flex gap-2">
+                    {hasBothOptions && (
+                      <button
+                        onClick={() => setSelectedWalletType(null)}
+                        className="text-gray-400 hover:text-gray-600 text-sm"
+                      >
+                        ← Back
+                      </button>
+                    )}
+                    <button
+                      onClick={() => setIsOpen(false)}
+                      className="text-gray-400 hover:text-gray-600 text-xl"
+                    >
+                      ×
+                    </button>
+                  </div>
                 </div>
 
-                <p className="text-sm text-gray-600 mb-4">Scan with your Lightning wallet</p>
+                {getCurrentUri() && (
+                  <>
+                    <div className="bg-white p-4 rounded-lg mb-4">
+                      <QRCodeSVG value={getCurrentUri()!} size={200} className="mx-auto" />
+                    </div>
 
-                <a
-                  href={lightningUrl}
-                  onClick={handleOpenWallet}
-                  className="inline-block bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg transition-colors"
-                >
-                  Open in Wallet
-                </a>
+                    <p className="text-sm text-gray-600 mb-4">
+                      Scan with your {getCurrentWalletType() === 'lnurl' ? 'LNURL' : 'Bolt12'}-compatible wallet
+                    </p>
 
-                <p className="text-xs text-gray-500 mt-4">Powered by Lightning Network</p>
+                    <button
+                      onClick={() => handleOpenWallet(getCurrentWalletType())}
+                      className="inline-block bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg transition-colors"
+                    >
+                      Open in Wallet
+                    </button>
+
+                    <p className="text-xs text-gray-500 mt-4">Powered by Lightning Network</p>
+                  </>
+                )}
               </div>
             )}
           </div>
         </div>
       )}
 
-      {isOpen && !lightningUrl && (
-        <div className="text-center text-red-500 mt-4">⚠️ Invalid Lightning address</div>
+      {isOpen && !hasLnurl && !hasBolt12 && (
+        <div className="text-center text-red-500 mt-4">⚠️ Invalid payment details</div>
       )}
     </>
   )

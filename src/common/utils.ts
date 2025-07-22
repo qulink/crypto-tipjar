@@ -12,3 +12,8 @@ export function isValidHexColor(color: string): boolean {
 export function sanitizeButtonText(text: string): string {
   return text.replace(/[<>]/g, '').trim() || 'Donate Bitcoin'
 }
+
+export function validateBolt12Offer(offer: string): boolean {
+  // Bolt12 offers start with 'lno1' and are always lowercase
+  return /^lno1[a-z0-9]+$/.test(offer.trim())
+}

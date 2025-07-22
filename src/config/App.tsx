@@ -8,6 +8,7 @@ import { Footer } from './components/Footer'
 
 function App() {
   const [lnAddress, setLnAddress] = useState('')
+  const [bolt12Offer, setBolt12Offer] = useState('')
   const [buttonText, setButtonText] = useState('Donate Bitcoin')
   const [buttonColor, setButtonColor] = useState('#38C5FE')
   const [fontColor, setFontColor] = useState('#FFFFFF')
@@ -22,6 +23,8 @@ function App() {
         <GetATipjar
           lnAddress={lnAddress}
           setLnAddress={setLnAddress}
+          bolt12Offer={bolt12Offer}
+          setBolt12Offer={setBolt12Offer}
           buttonText={buttonText}
           setButtonText={setButtonText}
           buttonColor={buttonColor}

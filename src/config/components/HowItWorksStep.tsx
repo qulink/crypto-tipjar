@@ -15,9 +15,10 @@ export function HowItWorksStep({ number, title, description }: StepProps) {
         }}
       ></div>
 
+      {/* bg-gradient-to-br from-[#38C5FE] to-[#FA98F8] */}
       {/* Card content */}
       <div className="relative bg-[#181b1f] rounded-xl px-8 py-6 text-justify h-full flex flex-col">
-        <div className="bg-gradient-to-br from-[#38C5FE] to-[#FA98F8] text-black rounded-full w-10 h-10 flex items-center justify-center text-base font-black mx-auto mb-4">
+        <div className="bg-[#24292e] text-white rounded-full w-10 h-10 flex items-center justify-center text-base font-black mx-auto mb-4">
           {number}
         </div>
 

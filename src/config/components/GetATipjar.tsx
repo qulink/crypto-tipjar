@@ -1,11 +1,13 @@
 import { TipWidget } from '../../widget/TipWidget'
 import { useState } from 'react'
 import { StarryBackground } from './StarryBackground'
-import { validateLightningAddress } from '../../common/utils'
+import { validateLightningAddress, validateBolt12Offer } from '../../common/utils'
 
 interface GetATipjarProps {
   lnAddress: string
   setLnAddress: (value: string) => void
+  bolt12Offer: string
+  setBolt12Offer: (value: string) => void
   buttonText: string
   setButtonText: (value: string) => void
   buttonColor: string
@@ -17,6 +19,8 @@ interface GetATipjarProps {
 export function GetATipjar({
   lnAddress,
   setLnAddress,
+  bolt12Offer,
+  setBolt12Offer,
   buttonText,
   setButtonText,
   buttonColor,
@@ -26,11 +30,14 @@ export function GetATipjar({
 }: GetATipjarProps) {
   const [showCode, setShowCode] = useState(false)
   const isValidAddress = validateLightningAddress(lnAddress)
+  const isValidBolt12 = validateBolt12Offer(bolt12Offer)
+  const hasValidPaymentMethod = isValidAddress || isValidBolt12
 
   const codeSnippet = `
 <script src="https://cdn.kryptip.com/widget.js"></script>
 <kryptip-button
   address="${lnAddress}"
+  ${bolt12Offer ? `bolt12="${bolt12Offer}"` : ''}
   text="${buttonText}"
   color="${buttonColor}"
   font="${fontColor}"
@@ -58,9 +65,16 @@ export function GetATipjar({
             <h3 className="text-2xl font-display font-semibold mb-6">Configure Your Widget</h3>
 
             <div className="space-y-6">
+              <div className="mb-4 p-3 bg-blue-900/30 rounded-lg border border-blue-500/30">
+                <p className="text-sm font-body text-blue-200">
+                  <strong>Required:</strong> Enter at least one payment method (Lightning Address{' '}
+                  <strong>or</strong> Bolt12 Offer <strong>or</strong> both)
+                </p>
+              </div>
+
               <div>
                 <label className="block text-sm font-body font-medium mb-2">
-                  Lightning Address *
+                  Lightning Address <span className="text-gray-400">(optional)</span>
                 </label>
                 <input
                   type="text"
@@ -68,9 +82,11 @@ export function GetATipjar({
                   onChange={(e) => setLnAddress(e.target.value)}
                   placeholder="your@example.com"
                   className="w-full px-4 py-3 border border-gray-600 bg-[#24292e] rounded-lg text-white focus:outline-none focus:border-transparent relative"
-                  style={{
-                    '--tw-ring-color': 'transparent',
-                  } as React.CSSProperties}
+                  style={
+                    {
+                      '--tw-ring-color': 'transparent',
+                    } as React.CSSProperties
+                  }
                   onFocus={(e) => {
                     e.target.style.border = '2px solid transparent'
                     e.target.style.backgroundImage =
@@ -91,20 +107,60 @@ export function GetATipjar({
                   </p>
                 ) : (
                   <p className="text-sm font-body text-white/60 mt-2">
-                    Don't have one? Get started with{' '}
-                    <a
-                      href="https://breez.technology/misty/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-medium"
-                      style={{ color: '#FA98F8' }}
-                    >
-                      Misty Breez
-                    </a>{' '}
-                    .
+                    Compatible with custodial wallets like Wallet of Satoshi, Misty Breez, etc.
                   </p>
                 )}
               </div>
+
+              <div>
+                <label className="block text-sm font-body font-medium mb-2">
+                  Bolt12 Offer <span className="text-gray-400">(optional)</span>
+                </label>
+                <input
+                  type="text"
+                  value={bolt12Offer}
+                  onChange={(e) => setBolt12Offer(e.target.value)}
+                  placeholder="lno1qcp4256wyldmurn..."
+                  className="w-full px-4 py-3 border border-gray-600 bg-[#24292e] rounded-lg text-white focus:outline-none focus:border-transparent relative"
+                  style={
+                    {
+                      '--tw-ring-color': 'transparent',
+                    } as React.CSSProperties
+                  }
+                  onFocus={(e) => {
+                    e.target.style.border = '2px solid transparent'
+                    e.target.style.backgroundImage =
+                      'linear-gradient(#24292e, #24292e), linear-gradient(45deg, #38C5FE, #FA98F8)'
+                    e.target.style.backgroundOrigin = 'border-box'
+                    e.target.style.backgroundClip = 'padding-box, border-box'
+                  }}
+                  onBlur={(e) => {
+                    e.target.style.border = '1px solid rgb(75 85 99)'
+                    e.target.style.backgroundImage = 'none'
+                    e.target.style.backgroundOrigin = 'initial'
+                    e.target.style.backgroundClip = 'initial'
+                  }}
+                />
+                {bolt12Offer && !isValidBolt12 ? (
+                  <p className="text-sm font-body text-red-400 mt-2">
+                    ⚠️ Please enter a valid Bolt12 offer (starts with lno1)
+                  </p>
+                ) : (
+                  <p className="text-sm font-body text-white/60 mt-2">
+                    Compatible with certain modern non-custodial wallets like Phoenix. Provides
+                    enhanced privacy.
+                  </p>
+                )}
+              </div>
+
+              {!hasValidPaymentMethod && (lnAddress || bolt12Offer) && (
+                <div className="p-3 bg-red-900/30 rounded-lg border border-red-500/30">
+                  <p className="text-sm font-body text-red-200">
+                    ⚠️ Please enter at least one valid payment method (Lightning Address or Bolt12
+                    offer)
+                  </p>
+                </div>
+              )}
 
               <div>
                 <label className="block text-sm font-body font-medium mb-2">Button Text</label>
@@ -114,9 +170,11 @@ export function GetATipjar({
                   onChange={(e) => setButtonText(e.target.value)}
                   placeholder="Donate Bitcoin"
                   className="w-full px-4 py-3 border border-gray-600 bg-[#24292e] rounded-lg text-white focus:outline-none focus:border-transparent relative"
-                  style={{
-                    '--tw-ring-color': 'transparent',
-                  } as React.CSSProperties}
+                  style={
+                    {
+                      '--tw-ring-color': 'transparent',
+                    } as React.CSSProperties
+                  }
                   onFocus={(e) => {
                     e.target.style.border = '2px solid transparent'
                     e.target.style.backgroundImage =
@@ -151,9 +209,11 @@ export function GetATipjar({
                         onChange={(e) => setButtonColor(e.target.value)}
                         placeholder="#38C5FE"
                         className="flex-1 px-4 py-3 border border-gray-600 bg-[#24292e] rounded-lg text-white focus:outline-none focus:border-transparent relative"
-                        style={{
-                          '--tw-ring-color': 'transparent',
-                        } as React.CSSProperties}
+                        style={
+                          {
+                            '--tw-ring-color': 'transparent',
+                          } as React.CSSProperties
+                        }
                         onFocus={(e) => {
                           e.target.style.border = '2px solid transparent'
                           e.target.style.backgroundImage =
@@ -187,9 +247,11 @@ export function GetATipjar({
                         onChange={(e) => setFontColor(e.target.value)}
                         placeholder="#000000"
                         className="flex-1 px-4 py-3 border border-gray-600 bg-[#24292e] rounded-lg text-white focus:outline-none focus:border-transparent relative"
-                        style={{
-                          '--tw-ring-color': 'transparent',
-                        } as React.CSSProperties}
+                        style={
+                          {
+                            '--tw-ring-color': 'transparent',
+                          } as React.CSSProperties
+                        }
                         onFocus={(e) => {
                           e.target.style.border = '2px solid transparent'
                           e.target.style.backgroundImage =
@@ -218,10 +280,14 @@ export function GetATipjar({
               <div className="flex items-center gap-4">
                 <label className="text-sm font-medium">Show Code</label>
                 <button
-                  onClick={() => isValidAddress && setShowCode(!showCode)}
-                  disabled={!isValidAddress}
+                  onClick={() => hasValidPaymentMethod && setShowCode(!showCode)}
+                  disabled={!hasValidPaymentMethod}
                   className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                    showCode && isValidAddress ? 'bg-gradient-to-r from-[#38C5FE] to-[#FA98F8]' : isValidAddress ? 'bg-gray-600' : 'bg-gray-800 opacity-50 cursor-not-allowed'
+                    showCode && hasValidPaymentMethod
+                      ? 'bg-gradient-to-r from-[#38C5FE] to-[#FA98F8]'
+                      : hasValidPaymentMethod
+                        ? 'bg-gray-600'
+                        : 'bg-gray-800 opacity-50 cursor-not-allowed'
                   }`}
                 >
                   <span
@@ -234,15 +300,18 @@ export function GetATipjar({
             </div>
 
             <div className="border-2 border-dashed border-gray-600 rounded-lg p-6 text-center min-h-[100px] flex items-center justify-center">
-              {lnAddress ? (
+              {hasValidPaymentMethod ? (
                 <TipWidget
                   lnAddress={lnAddress}
+                  bolt12Offer={bolt12Offer}
                   buttonText={buttonText}
                   buttonColor={buttonColor}
                   fontColor={fontColor}
                 />
               ) : (
-                <p className="font-body text-white/60">Enter a Lightning address to see preview</p>
+                <p className="font-body text-white/60">
+                  Enter a Lightning address or Bolt12 offer to see preview
+                </p>
               )}
             </div>
 

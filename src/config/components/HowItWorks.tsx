@@ -23,38 +23,38 @@ export function HowItWorks() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-8 md:gap-x-12 lg:gap-x-8 xl:gap-x-6">
           <HowItWorksStep
             number="1"
-            title="Get a Lightning Address"
-            description="Sign up for a wallet like Wallet of Satoshi, or Misty Breez — these support Lightning Addresses. You can also search for other Bitcoin wallets with Lightning support."
+            title="Choose Your Wallet"
+            description="To receive tips, you'll need a Bitcoin wallet that supports Lightning. Custodial wallets like Wallet of Satoshi support Lightning Addresses. Non-custodial wallets like Phoenix support Bolt12 offers."
           />
 
           <HowItWorksStep
             number="2"
-            title="Find Your Address"
-            description="If you already have a Lightning-enabled wallet, check the app’s settings, profile page, or receive tab. Look for something that resembles an email address — that’s your Lightning Address."
+            title="Copy Your Tip Info"
+            description="In your wallet’s receive tab, copy either your Lightning Address (it looks like an email), your Bolt12 offer (starts with 'lno1...'), or both if you have them."
           />
 
           <HowItWorksStep
             number="3"
             title="Customize Your Widget"
-            description="Enter your Lightning Address, pick your button text and color to match your brand or aesthetic. You’ll instantly see a live preview of your widget."
+            description="Paste your address and/or offer into the configurator. Pick your button text and color to match your brand. You’ll instantly see a live preview of your widget."
           />
 
           <HowItWorksStep
             number="4"
             title="Copy the Code"
-            description="You’ll receive a small snippet of HTML code. Copy this code and paste it into your website. If you're using platforms like WordPress, use a custom HTML block or embed widget. If your platform doesn’t support embeds, you can still link to a standalone tip page."
+            description="You’ll receive a small snippet of HTML code. Copy and paste it into your website. Platforms like WordPress support this via custom HTML blocks or embeds."
           />
 
           <HowItWorksStep
             number="5"
             title="Test Your Tipjar"
-            description="Open your site and click the button. You should see a QR code and Lightning prompt. If everything works, you're ready to share it with the world."
+            description="Click the button on your site. You should see a QR code and be able to choose how to pay. If everything works, you're ready to start accepting tips."
           />
 
           <HowItWorksStep
             number="6"
             title="Receive Tips Instantly"
-            description="Visitors can click the button or scan the QR code. They’ll be prompted to enter the amount they want to tip before completing the payment. Once sent, you'll receive the Bitcoin instantly via Lightning."
+            description="Visitors can scan the QR code or click to pay. Depending on their wallet, they’ll use either your Lightning Address or Bolt12 offer to send you instant Bitcoin tips."
           />
         </div>
       </div>
