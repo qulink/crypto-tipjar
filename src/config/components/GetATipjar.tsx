@@ -74,7 +74,7 @@ export function GetATipjar({
 
               <div>
                 <label className="block text-sm font-body font-medium mb-2">
-                  Lightning Address <span className="text-gray-400">(optional)</span>
+                  Lightning Address
                 </label>
                 <input
                   type="text"
@@ -113,9 +113,7 @@ export function GetATipjar({
               </div>
 
               <div>
-                <label className="block text-sm font-body font-medium mb-2">
-                  Bolt12 Offer <span className="text-gray-400">(optional)</span>
-                </label>
+                <label className="block text-sm font-body font-medium mb-2">Bolt12 Offer</label>
                 <input
                   type="text"
                   value={bolt12Offer}
