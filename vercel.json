@@ -8,6 +8,5 @@
   "github": {
     "autoAlias": false
   },
-  "functions": {},
   "buildCommand": "npm run build"
 }
