@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 import { QRCodeSVG } from 'qrcode.react'
 import { bech32 } from 'bech32'
-import { validateBolt12Offer } from '../common/utils'
+import { validateBolt12Offer, validateLightningAddress, sanitizeButtonText } from '../common/utils'
+import { config, logError } from '../common/config'
 
 interface TipWidgetProps {
   lnAddress?: string
@@ -18,47 +19,60 @@ export function TipWidget({
   buttonColor = '#DCE546',
   fontColor = '#FFFFFF',
 }: TipWidgetProps) {
+  // Always sanitize button text regardless of source
+  const safeButtonText = sanitizeButtonText(buttonText)
   const [isOpen, setIsOpen] = useState(false)
   const [showThanks, setShowThanks] = useState(false)
   const [selectedWalletType, setSelectedWalletType] = useState<'lnurl' | 'bolt12' | null>(null)
 
-  // Defensive check: show nothing if no valid payment method is provided
-  if (!lnAddress && !bolt12Offer) return null
+  const { lnurlUri, bolt12Uri, hasValidPayment } = useMemo(() => {
+    let lnurlUri: string | null = null
+    let bolt12Uri: string | null = null
 
-  // Validate and prepare payment methods
-  let lnurlUri: string | null = null
-  let bolt12Uri: string | null = null
-
-  // Generate LNURL if valid Lightning Address is provided
-  if (lnAddress) {
-    const [name, domain] = lnAddress.split('@')
-    if (name && domain) {
-      try {
-        const url = `https://${domain}/.well-known/lnurlp/${name}`
-        const words = bech32.toWords(new TextEncoder().encode(url))
-        const lnurl = bech32.encode('lnurl', words)
-        lnurlUri = `lightning:${lnurl}`
-      } catch (err) {
-        console.error('LNURL generation failed:', err)
-        lnurlUri = null
+    // Generate LNURL if valid Lightning Address is provided
+    if (lnAddress && validateLightningAddress(lnAddress)) {
+      const [name, domain] = lnAddress.split('@')
+      if (name && domain) {
+        try {
+          const url = `https://${domain}/.well-known/lnurlp/${name}`
+          const words = bech32.toWords(new TextEncoder().encode(url))
+          const lnurl = bech32.encode('lnurl', words)
+          lnurlUri = `lightning:${lnurl}`
+        } catch (err) {
+          logError('LNURL generation failed', err as Error)
+          lnurlUri = null
+        }
       }
     }
-  }
 
-  // Validate Bolt12 offer if provided
-  if (bolt12Offer && validateBolt12Offer(bolt12Offer)) {
-    bolt12Uri = `lightning:${bolt12Offer}`
-  }
+    // Validate Bolt12 offer if provided
+    if (bolt12Offer && validateBolt12Offer(bolt12Offer)) {
+      bolt12Uri = `lightning:${bolt12Offer}`
+    }
+
+    return {
+      lnurlUri,
+      bolt12Uri,
+      hasValidPayment: !!(lnurlUri || bolt12Uri)
+    }
+  }, [lnAddress, bolt12Offer])
+
+  // Defensive check: show nothing if no valid payment method is provided
+  if (!hasValidPayment) return null
 
   const hasLnurl = !!lnurlUri
   const hasBolt12 = !!bolt12Uri
   const hasBothOptions = hasLnurl && hasBolt12
 
-  const handleOpenWallet = (walletType?: 'lnurl' | 'bolt12') => {
+  const handleOpenWallet = useCallback((walletType?: 'lnurl' | 'bolt12') => {
     if (walletType) {
       const uri = walletType === 'lnurl' ? lnurlUri : bolt12Uri
       if (uri) {
-        window.open(uri, '_blank')
+        try {
+          window.open(uri, '_blank')
+        } catch (error) {
+          logError('Failed to open wallet', error as Error)
+        }
       }
     }
     setShowThanks(true)
@@ -66,8 +80,8 @@ export function TipWidget({
       setShowThanks(false)
       setIsOpen(false)
       setSelectedWalletType(null)
-    }, 3000)
-  }
+    }, config.widget.thanksDisplayDuration)
+  }, [lnurlUri, bolt12Uri])
 
   const handleOverlayClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
@@ -102,7 +116,7 @@ export function TipWidget({
         style={{ backgroundColor: buttonColor, color: fontColor }}
         className="px-4 py-2 rounded-lg hover:opacity-90 transition-opacity font-medium"
       >
-        {buttonText}
+        {safeButtonText}
       </button>
 
       {isOpen && (hasLnurl || hasBolt12) && (
@@ -173,7 +187,7 @@ export function TipWidget({
                 {getCurrentUri() && (
                   <>
                     <div className="bg-white p-4 rounded-lg mb-4">
-                      <QRCodeSVG value={getCurrentUri()!} size={200} className="mx-auto" />
+                      <QRCodeSVG value={getCurrentUri()!} size={config.widget.qrCodeSize} className="mx-auto" />
                     </div>
 
                     <p className="text-sm text-gray-600 mb-4">

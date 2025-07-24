@@ -6,11 +6,7 @@ export function Footer() {
           {/* Branding and description */}
           <div className="md:max-w-md">
             <div className="flex items-center mb-4">
-              <img
-                src="/logo.png"
-                alt="Logo"
-                className="h-8 w-8 rounded-full object-cover mr-3"
-              />
+              <img src="/logo.png" alt="Logo" className="h-8 w-8 rounded-full object-cover mr-3" />
               <span className="text-2xl font-display font-bold">Kryptip</span>
             </div>
             <p className="font-body text-gray-400">
@@ -48,7 +44,7 @@ export function Footer() {
         </div>
 
         <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-          <p className="font-body">2025 Kryptip. Powered by ⚡ Lightning Network.</p>
+          <p className="font-body">2025 Kryptip. Powered by Lightning Network.</p>
         </div>
       </div>
     </footer>
