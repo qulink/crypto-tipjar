@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build && npm run build:widget && cp dist/widget/embed.css dist/ && cp dist/widget/embed.iife.js dist/embed.js",
     "build:widget": "tsc && vite build --config vite.widget.config.ts",
     "build:site": "tsc && vite build --config vite.site.config.ts",
     "preview": "vite preview",

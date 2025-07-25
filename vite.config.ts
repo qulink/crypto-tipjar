@@ -8,17 +8,7 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        site: resolve(__dirname, 'index.html'),
-        widget: resolve(__dirname, 'src/widget/index.tsx')
-      },
-      output: {
-        entryFileNames: (chunkInfo) => {
-          return chunkInfo.name === 'widget' ? 'embed.js' : 'assets/[name]-[hash].js'
-        },
-        assetFileNames: (assetInfo) => {
-          if (assetInfo.name === 'index.css' || (assetInfo.name && assetInfo.name.indexOf('widget') !== -1)) return 'embed.css'
-          return 'assets/[name]-[hash][extname]'
-        }
+        site: resolve(__dirname, 'index.html')
       }
     }
   }
