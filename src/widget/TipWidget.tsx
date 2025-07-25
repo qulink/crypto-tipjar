@@ -53,7 +53,7 @@ export function TipWidget({
     return {
       lnurlUri,
       bolt12Uri,
-      hasValidPayment: !!(lnurlUri || bolt12Uri)
+      hasValidPayment: !!(lnurlUri || bolt12Uri),
     }
   }, [lnAddress, bolt12Offer])
 
@@ -64,19 +64,22 @@ export function TipWidget({
   const hasBolt12 = !!bolt12Uri
   const hasBothOptions = hasLnurl && hasBolt12
 
-  const handleOpenWallet = useCallback((walletType?: 'lnurl' | 'bolt12') => {
-    if (walletType) {
-      const uri = walletType === 'lnurl' ? lnurlUri : bolt12Uri
-      if (uri) {
-        try {
-          window.open(uri, '_blank')
-        } catch (error) {
-          logError('Failed to open wallet', error as Error)
+  const handleOpenWallet = useCallback(
+    (walletType?: 'lnurl' | 'bolt12') => {
+      if (walletType) {
+        const uri = walletType === 'lnurl' ? lnurlUri : bolt12Uri
+        if (uri) {
+          try {
+            window.open(uri, '_blank')
+          } catch (error) {
+            logError('Failed to open wallet', error as Error)
+          }
         }
       }
-    }
-    setShowThanks(true)
-  }, [lnurlUri, bolt12Uri])
+      setShowThanks(true)
+    },
+    [lnurlUri, bolt12Uri]
+  )
 
   const handleOverlayClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
@@ -92,7 +95,11 @@ export function TipWidget({
 
   const getCurrentUri = () => {
     if (hasBothOptions) {
-      return selectedWalletType === 'lnurl' ? lnurlUri : selectedWalletType === 'bolt12' ? bolt12Uri : null
+      return selectedWalletType === 'lnurl'
+        ? lnurlUri
+        : selectedWalletType === 'bolt12'
+          ? bolt12Uri
+          : null
     }
     return lnurlUri || bolt12Uri
   }
@@ -156,14 +163,16 @@ export function TipWidget({
                     className="w-full bg-blue-500 hover:bg-blue-600 text-white px-4 py-3 rounded-lg transition-colors"
                   >
                     LNURL-compatible wallet
-                    <div className="text-xs opacity-90 mt-1">Wallet of Satoshi, Breez, etc.</div>
+                    <div className="text-xs opacity-90 mt-1">
+                      Wallet of Satoshi, Misty Breez, etc.
+                    </div>
                   </button>
                   <button
                     onClick={() => handleWalletTypeSelection('bolt12')}
                     className="w-full bg-purple-500 hover:bg-purple-600 text-white px-4 py-3 rounded-lg transition-colors"
                   >
                     Bolt12-compatible wallet
-                    <div className="text-xs opacity-90 mt-1">Phoenix, CLN, etc.</div>
+                    <div className="text-xs opacity-90 mt-1">Phoenix, etc.</div>
                   </button>
                 </div>
               </div>
@@ -192,16 +201,21 @@ export function TipWidget({
                 {getCurrentUri() && (
                   <>
                     <div className="bg-white p-4 rounded-lg mb-4">
-                      <QRCodeSVG value={getCurrentUri()!} size={config.widget.qrCodeSize} className="mx-auto" />
+                      <QRCodeSVG
+                        value={getCurrentUri()!}
+                        size={config.widget.qrCodeSize}
+                        className="mx-auto"
+                      />
                     </div>
 
                     <p className="text-sm text-gray-600 mb-4">
-                      Scan with your {getCurrentWalletType() === 'lnurl' ? 'LNURL' : 'Bolt12'}-compatible wallet
+                      Scan with your {getCurrentWalletType() === 'lnurl' ? 'LNURL' : 'Bolt12'}
+                      -compatible wallet
                     </p>
 
                     <button
                       onClick={() => handleOpenWallet(getCurrentWalletType())}
-                      className="inline-block bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-lg transition-colors"
+                      className="inline-block bg-gradient-to-r from-[#38C5FE] to-[#FA98F8] hover:from-[#2AA9E0] hover:to-[#F26BC1] text-white px-6 py-2 rounded-lg transition-colors"
                     >
                       Open in Wallet
                     </button>
