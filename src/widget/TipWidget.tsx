@@ -121,20 +121,17 @@ export function TipWidget({
         >
           <div className="bg-white rounded-xl p-6 max-w-sm mx-4 shadow-2xl">
             {showThanks ? (
-              <div className="text-center">
-                <div className="flex justify-between items-center mb-4">
-                  <div></div>
-                  <button
-                    onClick={() => {
-                      setShowThanks(false)
-                      setIsOpen(false)
-                      setSelectedWalletType(null)
-                    }}
-                    className="text-gray-400 hover:text-gray-600 text-xl"
-                  >
-                    ×
-                  </button>
-                </div>
+              <div className="text-center relative">
+                <button
+                  onClick={() => {
+                    setShowThanks(false)
+                    setIsOpen(false)
+                    setSelectedWalletType(null)
+                  }}
+                  className="absolute top-0 right-0 text-gray-400 hover:text-gray-600 text-xl"
+                >
+                  ×
+                </button>
                 <div className="text-6xl mb-4">🙏</div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">Thank you!</h3>
                 <p className="text-gray-600">Your support means everything</p>

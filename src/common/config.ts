@@ -9,7 +9,6 @@ export const config = {
     maxLnAddressLength: 320,
     maxBolt12Length: 2000,
     maxDataAttributeLength: 200,
-    thanksDisplayDuration: 3000,
     qrCodeSize: 200,
   },
   security: {
