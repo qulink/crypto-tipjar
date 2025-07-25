@@ -175,6 +175,7 @@ export function GetATipjar({
                   value={buttonText}
                   onChange={(e) => setButtonText(e.target.value)}
                   placeholder="Donate Bitcoin"
+                  maxLength={50}
                   className="w-full px-4 py-3 border border-gray-600 bg-[#24292e] rounded-lg text-white focus:outline-none focus:border-transparent relative"
                   style={
                     {
@@ -195,6 +196,18 @@ export function GetATipjar({
                     e.target.style.backgroundClip = 'initial'
                   }}
                 />
+                <div className="flex justify-between items-center mt-2">
+                  <div></div>
+                  <span className={`text-xs font-body ${
+                    buttonText.length > 40 
+                      ? buttonText.length >= 50
+                        ? 'text-red-400'
+                        : 'text-yellow-400'
+                      : 'text-white/60'
+                  }`}>
+                    {buttonText.length}/50
+                  </span>
+                </div>
               </div>
 
               <div>
