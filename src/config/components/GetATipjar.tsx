@@ -29,6 +29,7 @@ export function GetATipjar({
   setFontColor,
 }: GetATipjarProps) {
   const [showCode, setShowCode] = useState(false)
+  const [copied, setCopied] = useState(false)
   const isValidAddress = validateLightningAddress(lnAddress)
   const isValidBolt12 = validateBolt12Offer(bolt12Offer)
   const hasValidPaymentMethod = isValidAddress || isValidBolt12
@@ -45,8 +46,15 @@ export function GetATipjar({
 <script async src="https://kryptip.xyz/embed.js"></script>`
 
   const copyCode = async () => {
-    await navigator.clipboard.writeText(codeSnippet)
-    alert('Code copied to clipboard!')
+    try {
+      await navigator.clipboard.writeText(codeSnippet)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    } catch (error) {
+      console.error('Failed to copy code:', error)
+      // Fallback to alert if clipboard API fails
+      alert('Code copied to clipboard!')
+    }
   }
 
   return (
@@ -323,19 +331,23 @@ export function GetATipjar({
                   className="absolute top-2 right-2 p-2 text-white hover:text-gray-300 transition-colors"
                   title="Copy to clipboard"
                 >
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
-                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                  </svg>
+                  {copied ? (
+                    <span className="text-sm font-medium text-green-400">Copied!</span>
+                  ) : (
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                  )}
                 </button>
               </div>
             )}
