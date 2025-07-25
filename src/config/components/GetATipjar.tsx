@@ -332,7 +332,7 @@ export function GetATipjar({
                   title="Copy to clipboard"
                 >
                   {copied ? (
-                    <span className="text-sm font-medium text-green-400">Copied!</span>
+                    <span className="text-sm font-medium text-green-400">Copied</span>
                   ) : (
                     <svg
                       width="16"
