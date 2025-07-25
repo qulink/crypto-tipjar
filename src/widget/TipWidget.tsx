@@ -16,7 +16,7 @@ export function TipWidget({
   lnAddress,
   bolt12Offer,
   buttonText = 'Donate Bitcoin',
-  buttonColor = '#DCE546',
+  buttonColor = '#38C5FE',
   fontColor = '#FFFFFF',
 }: TipWidgetProps) {
   // Always sanitize button text regardless of source
@@ -33,14 +33,17 @@ export function TipWidget({
     if (lnAddress && validateLightningAddress(lnAddress)) {
       const [name, domain] = lnAddress.split('@')
       if (name && domain) {
+        const url = `https://${domain}/.well-known/lnurlp/${name}`
+        const urlBytes = new TextEncoder().encode(url)
+        const words = bech32.toWords(urlBytes)
+
+        // Try to encode - if it exceeds bech32 limit, fallback to Lightning address
         try {
-          const url = `https://${domain}/.well-known/lnurlp/${name}`
-          const words = bech32.toWords(new TextEncoder().encode(url))
           const lnurl = bech32.encode('lnurl', words)
           lnurlUri = `lightning:${lnurl}`
-        } catch (err) {
-          logError('LNURL generation failed', err as Error)
-          lnurlUri = null
+        } catch (encodingErr) {
+          // Bech32 encoding failed due to length, use Lightning address directly
+          lnurlUri = `lightning:${lnAddress}`
         }
       }
     }
