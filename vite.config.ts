@@ -16,7 +16,7 @@ export default defineConfig({
           return chunkInfo.name === 'widget' ? 'embed.js' : 'assets/[name]-[hash].js'
         },
         assetFileNames: (assetInfo) => {
-          if (assetInfo.name === 'style.css') return 'embed.css'
+          if (assetInfo.name === 'index.css' || (assetInfo.name && assetInfo.name.indexOf('widget') !== -1)) return 'embed.css'
           return 'assets/[name]-[hash][extname]'
         }
       }

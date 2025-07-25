@@ -33,7 +33,7 @@ export function GetATipjar({
   const isValidBolt12 = validateBolt12Offer(bolt12Offer)
   const hasValidPaymentMethod = isValidAddress || isValidBolt12
 
-  const codeSnippet = `<link rel="stylesheet" href="https://tipjar.vercel.app/embed.css" />
+  const codeSnippet = `<link rel="stylesheet" href="https://kryptip.xyz/embed.css" />
 <div
   id="tipjar"
   ${lnAddress ? `data-lnaddress="${lnAddress}"` : ''}
@@ -42,7 +42,7 @@ export function GetATipjar({
   data-color="${buttonColor}"
   data-fontcolor="${fontColor}"
 ></div>
-<script async src="https://tipjar.vercel.app/embed.js"></script>`
+<script async src="https://kryptip.xyz/embed.js"></script>`
 
   const copyCode = async () => {
     await navigator.clipboard.writeText(codeSnippet)
