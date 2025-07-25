@@ -198,13 +198,11 @@ export function GetATipjar({
                 />
                 <div className="flex justify-between items-center mt-2">
                   <div></div>
-                  <span className={`text-xs font-body ${
-                    buttonText.length > 40 
-                      ? buttonText.length >= 50
-                        ? 'text-red-400'
-                        : 'text-yellow-400'
-                      : 'text-white/60'
-                  }`}>
+                  <span
+                    className={`text-xs font-body ${
+                      buttonText.length >= 50 ? 'text-red-400' : 'text-white/60'
+                    }`}
+                  >
                     {buttonText.length}/50
                   </span>
                 </div>
