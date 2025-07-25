@@ -160,7 +160,7 @@ export function TipWidget({
                 <div className="space-y-3">
                   <button
                     onClick={() => handleWalletTypeSelection('lnurl')}
-                    className="w-full bg-blue-500 hover:bg-blue-600 text-white px-4 py-3 rounded-lg transition-colors"
+                    className="w-full bg-yellow-500 hover:bg-yellow-600 text-black px-4 py-3 rounded-lg transition-colors"
                   >
                     LNURL-compatible wallet
                     <div className="text-xs opacity-90 mt-1">
@@ -169,7 +169,7 @@ export function TipWidget({
                   </button>
                   <button
                     onClick={() => handleWalletTypeSelection('bolt12')}
-                    className="w-full bg-purple-500 hover:bg-purple-600 text-white px-4 py-3 rounded-lg transition-colors"
+                    className="w-full bg-yellow-500 hover:bg-yellow-600 text-black px-4 py-3 rounded-lg transition-colors"
                   >
                     Bolt12-compatible wallet
                     <div className="text-xs opacity-90 mt-1">Phoenix, etc.</div>
