@@ -112,7 +112,7 @@ export function GetATipjar({
                 />
                 {lnAddress && !isValidAddress ? (
                   <p className="text-sm font-body text-red-400 mt-2">
-                    ⚠️ Please enter a valid Lightning Address (e.g., user@domain.com)
+                    Please enter a valid Lightning Address (e.g., user@domain.com)
                   </p>
                 ) : (
                   <p className="text-sm font-body text-white/60 mt-2">
@@ -150,7 +150,7 @@ export function GetATipjar({
                 />
                 {bolt12Offer && !isValidBolt12 ? (
                   <p className="text-sm font-body text-red-400 mt-2">
-                    ⚠️ Please enter a valid Bolt12 offer (starts with lno1)
+                    Please enter a valid Bolt12 offer (starts with lno1)
                   </p>
                 ) : (
                   <p className="text-sm font-body text-white/60 mt-2">
