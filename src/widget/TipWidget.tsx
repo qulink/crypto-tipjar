@@ -121,7 +121,7 @@ export function TipWidget({
       <button
         onClick={() => setIsOpen(true)}
         style={{ backgroundColor: customImageUrl ? 'transparent' : buttonColor, color: fontColor }}
-        className={`${customImageUrl ? 'p-0' : 'px-4 py-2'} rounded-lg hover:opacity-90 transition-opacity font-medium ${customImageUrl ? 'w-12 h-12' : ''}`}
+        className={`${customImageUrl ? 'p-0' : 'px-4 py-2'} rounded-lg hover:opacity-90 transition-opacity font-medium ${customImageUrl ? 'w-24 h-24' : ''}`}
       >
         {customImageUrl ? (
           <img 

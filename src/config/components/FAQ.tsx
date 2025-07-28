@@ -54,7 +54,7 @@ export function FAQ() {
     {
       question: 'Can I customize the widget appearance?',
       answer:
-        'Yes! You can change the button text and colors to match your website’s look and feel. You’ll see a live preview as you customize it.',
+        'Yes! You can change the button text and colors to match your website’s look and feel. You’ll see a live preview as you customize it. You can also upload your own image — like a logo, emoji, or sticker — to use as the button instead of text. Supported formats are PNG, JPG, GIF, and WEBP, with a file size limit of 500KB. Please only upload appropriate images and make sure you have the rights to use them — avoid copyrighted or restricted content. Even if you upload a custom image, we recommend setting a button text and color as a fallback in case the image fails to render on your site.',
     },
     {
       question: 'Do I need to create an account?',

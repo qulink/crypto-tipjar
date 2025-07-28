@@ -36,7 +36,7 @@ export function HowItWorks() {
           <HowItWorksStep
             number="3"
             title="Customize Your Widget"
-            description="Paste your Lightning address or Bolt12 code into the configurator. Pick your button text and color to match your brand. You’ll instantly see a live preview of your widget."
+            description="Paste your Lightning address or Bolt12 code into the configurator. Pick your button text and color to match your brand or upload a custom image. You’ll instantly see a live preview of your widget."
           />
 
           <HowItWorksStep
