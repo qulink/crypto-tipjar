@@ -2,6 +2,7 @@ import { TipWidget } from '../../widget/TipWidget'
 import { useState } from 'react'
 import { StarryBackground } from './StarryBackground'
 import { validateLightningAddress, validateBolt12Offer } from '../../common/utils'
+import { supabase } from '../../lib/supabase'
 
 interface GetATipjarProps {
   lnAddress: string
@@ -14,6 +15,8 @@ interface GetATipjarProps {
   setButtonColor: (value: string) => void
   fontColor: string
   setFontColor: (value: string) => void
+  customImageUrl: string
+  setCustomImageUrl: (value: string) => void
 }
 
 export function GetATipjar({
@@ -27,9 +30,13 @@ export function GetATipjar({
   setButtonColor,
   fontColor,
   setFontColor,
+  customImageUrl,
+  setCustomImageUrl,
 }: GetATipjarProps) {
   const [showCode, setShowCode] = useState(false)
   const [copied, setCopied] = useState(false)
+  const [isUploading, setIsUploading] = useState(false)
+  const [uploadError, setUploadError] = useState('')
   const isValidAddress = validateLightningAddress(lnAddress)
   const isValidBolt12 = validateBolt12Offer(bolt12Offer)
   const hasValidPaymentMethod = isValidAddress || isValidBolt12
@@ -42,6 +49,7 @@ export function GetATipjar({
   data-button="${buttonText}"
   data-color="${buttonColor}"
   data-fontcolor="${fontColor}"
+  ${customImageUrl ? `data-customimage="${customImageUrl}"` : ''}
 ></div>
 <script async src="https://kryptip.xyz/embed.js"></script>`
 
@@ -55,6 +63,76 @@ export function GetATipjar({
       // Fallback to alert if clipboard API fails
       alert('Code copied to clipboard!')
     }
+  }
+
+  const validateImageFile = (file: File): string | null => {
+    const validTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'image/webp']
+    const maxSize = 500 * 1024 // 500KB
+
+    if (!validTypes.includes(file.type)) {
+      return 'Please upload a PNG, JPG, GIF, or WEBP image file.'
+    }
+
+    if (file.size > maxSize) {
+      return 'File size must be less than 500KB.'
+    }
+
+    return null
+  }
+
+  const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (!file) return
+
+    const validationError = validateImageFile(file)
+    if (validationError) {
+      setUploadError(validationError)
+      return
+    }
+
+    setIsUploading(true)
+    setUploadError('')
+
+    try {
+      // Generate a unique filename with timestamp and random string
+      const timestamp = Date.now()
+      const randomString = Math.random().toString(36).substring(2, 15)
+      const fileExtension = file.name.split('.').pop()
+      const fileName = `${timestamp}-${randomString}.${fileExtension}`
+      
+      const { data, error } = await supabase.storage
+        .from('button-uploads')
+        .upload(fileName, file, {
+          cacheControl: '3600',
+          upsert: false
+        })
+
+      if (error) {
+        console.error('Supabase upload error:', error)
+        if (error.message.includes('row-level security policy')) {
+          setUploadError('Storage bucket needs RLS policies. Please run the SQL commands provided in the console.')
+        } else {
+          setUploadError(`Upload failed: ${error.message}`)
+        }
+        return
+      }
+
+      const { data: publicUrlData } = supabase.storage
+        .from('button-uploads')
+        .getPublicUrl(data.path)
+
+      setCustomImageUrl(publicUrlData.publicUrl)
+    } catch (error) {
+      console.error('Upload failed:', error)
+      setUploadError('Upload failed. Please try again.')
+    } finally {
+      setIsUploading(false)
+    }
+  }
+
+  const clearCustomImage = () => {
+    setCustomImageUrl('')
+    setUploadError('')
   }
 
   return (
@@ -287,6 +365,61 @@ export function GetATipjar({
                   </div>
                 </div>
               </div>
+
+              <div>
+                <label className="block text-sm font-body font-medium mb-2">Custom Button Image</label>
+                <p className="text-xs font-body text-white/60 mb-3">
+                  Upload a custom image for your tip button (PNG, JPG, GIF, WEBP - max 500KB)
+                </p>
+                
+                {customImageUrl ? (
+                  <div className="flex items-center gap-4">
+                    <div className="w-16 h-16 bg-gray-700 rounded-lg overflow-hidden">
+                      <img 
+                        src={customImageUrl} 
+                        alt="Custom button" 
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                    <button
+                      onClick={clearCustomImage}
+                      className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors text-sm"
+                    >
+                      Remove Image
+                    </button>
+                  </div>
+                ) : (
+                  <div className="relative">
+                    <input
+                      type="file"
+                      id="image-upload"
+                      accept="image/png,image/jpeg,image/jpg,image/gif,image/webp"
+                      onChange={handleImageUpload}
+                      disabled={isUploading}
+                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer disabled:cursor-not-allowed"
+                    />
+                    <div className={`border-2 border-dashed border-gray-600 rounded-lg p-6 text-center transition-colors ${isUploading ? 'opacity-50' : 'hover:border-gray-500'}`}>
+                      {isUploading ? (
+                        <div className="text-white/60">
+                          <div className="animate-spin w-6 h-6 border-2 border-white/20 border-t-white/60 rounded-full mx-auto mb-2"></div>
+                          Uploading...
+                        </div>
+                      ) : (
+                        <div className="text-white/60">
+                          <svg className="w-8 h-8 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                          </svg>
+                          Click to upload image
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+                
+                {uploadError && (
+                  <p className="text-sm font-body text-red-400 mt-2">{uploadError}</p>
+                )}
+              </div>
             </div>
           </div>
 
@@ -324,6 +457,7 @@ export function GetATipjar({
                   buttonText={buttonText}
                   buttonColor={buttonColor}
                   fontColor={fontColor}
+                  customImageUrl={customImageUrl}
                 />
               ) : (
                 <p className="font-body text-white/60">

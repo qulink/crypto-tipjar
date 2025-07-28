@@ -10,6 +10,7 @@ interface TipWidgetProps {
   buttonText?: string
   buttonColor?: string
   fontColor?: string
+  customImageUrl?: string
 }
 
 export function TipWidget({
@@ -18,6 +19,7 @@ export function TipWidget({
   buttonText = 'Donate Bitcoin',
   buttonColor = '#38C5FE',
   fontColor = '#FFFFFF',
+  customImageUrl,
 }: TipWidgetProps) {
   // Always sanitize button text regardless of source
   const safeButtonText = sanitizeButtonText(buttonText)
@@ -118,10 +120,18 @@ export function TipWidget({
     <>
       <button
         onClick={() => setIsOpen(true)}
-        style={{ backgroundColor: buttonColor, color: fontColor }}
-        className="px-4 py-2 rounded-lg hover:opacity-90 transition-opacity font-medium"
+        style={{ backgroundColor: customImageUrl ? 'transparent' : buttonColor, color: fontColor }}
+        className={`${customImageUrl ? 'p-0' : 'px-4 py-2'} rounded-lg hover:opacity-90 transition-opacity font-medium ${customImageUrl ? 'w-12 h-12' : ''}`}
       >
-        {safeButtonText}
+        {customImageUrl ? (
+          <img 
+            src={customImageUrl} 
+            alt={safeButtonText}
+            className="w-full h-full object-contain rounded-lg"
+          />
+        ) : (
+          safeButtonText
+        )}
       </button>
 
       {isOpen && (hasLnurl || hasBolt12) && (

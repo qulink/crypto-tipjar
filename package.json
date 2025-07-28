@@ -13,6 +13,7 @@
     "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,md}\""
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.52.1",
     "bech32": "^2.0.0",
     "js-lnurl": "^0.6.0",
     "qrcode.react": "^3.1.0",

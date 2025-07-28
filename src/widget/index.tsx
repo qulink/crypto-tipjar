@@ -21,12 +21,14 @@ function initTipWidget() {
     const rawButtonColor = element.dataset.color
     const rawButtonText = element.dataset.button
     const rawFontColor = element.dataset.fontcolor
+    const rawCustomImage = element.dataset.customimage
     
     const lnAddress = rawLnAddress && validateLightningAddress(rawLnAddress) ? rawLnAddress : undefined
     const bolt12Offer = rawBolt12 && validateBolt12Offer(rawBolt12) ? rawBolt12 : undefined
     const buttonColor = rawButtonColor && isValidHexColor(rawButtonColor) ? rawButtonColor : '#DCE546'
     const buttonText = sanitizeButtonText(rawButtonText || '')
     const fontColor = rawFontColor && isValidHexColor(rawFontColor) ? rawFontColor : '#FFFFFF'
+    const customImageUrl = rawCustomImage && rawCustomImage.startsWith('https://') ? rawCustomImage : undefined
 
     if (lnAddress || bolt12Offer) {
       try {
@@ -42,6 +44,7 @@ function initTipWidget() {
                 buttonColor={buttonColor}
                 buttonText={buttonText}
                 fontColor={fontColor}
+                customImageUrl={customImageUrl}
               />
             </ErrorBoundary>
           </React.StrictMode>

@@ -12,6 +12,7 @@ function App() {
   const [buttonText, setButtonText] = useState('Donate Bitcoin')
   const [buttonColor, setButtonColor] = useState('#38C5FE')
   const [fontColor, setFontColor] = useState('#FFFFFF')
+  const [customImageUrl, setCustomImageUrl] = useState('')
 
   return (
     <div className="min-h-screen">
@@ -31,6 +32,8 @@ function App() {
           setButtonColor={setButtonColor}
           fontColor={fontColor}
           setFontColor={setFontColor}
+          customImageUrl={customImageUrl}
+          setCustomImageUrl={setCustomImageUrl}
         />
         <FAQ />
       </main>
