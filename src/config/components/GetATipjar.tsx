@@ -37,11 +37,12 @@ export function GetATipjar({
   const [copied, setCopied] = useState(false)
   const [isUploading, setIsUploading] = useState(false)
   const [uploadError, setUploadError] = useState('')
+  const [codeType, setCodeType] = useState<'html' | 'tsx' | 'jsx'>('html')
   const isValidAddress = validateLightningAddress(lnAddress)
   const isValidBolt12 = validateBolt12Offer(bolt12Offer)
   const hasValidPaymentMethod = isValidAddress || isValidBolt12
 
-  const codeSnippet = `<link rel="stylesheet" href="https://kryptip.xyz/embed.css" />
+  const htmlSnippet = `<link rel="stylesheet" href="https://kryptip.xyz/embed.css" />
 <div
   id="tipjar"
   ${lnAddress ? `data-lnaddress="${lnAddress}"` : ''}
@@ -53,9 +54,181 @@ export function GetATipjar({
 ></div>
 <script async src="https://kryptip.xyz/embed.js"></script>`
 
+  const tsxSnippet = `// KryptipTipjar.tsx
+import { useEffect, useRef } from 'react'
+
+interface KryptipTipjarProps {${
+    lnAddress
+      ? `
+  lnAddress?: string`
+      : ''
+  }${
+    bolt12Offer
+      ? `
+  bolt12Offer?: string`
+      : ''
+  }
+  buttonText?: string
+  buttonColor?: string
+  fontColor?: string${
+    customImageUrl
+      ? `
+  customImageUrl?: string`
+      : ''
+  }
+}
+
+export function KryptipTipjar({${
+    lnAddress
+      ? `
+  lnAddress = "${lnAddress}",`
+      : ''
+  }${
+    bolt12Offer
+      ? `
+  bolt12Offer = "${bolt12Offer}",`
+      : ''
+  }
+  buttonText = "${buttonText}",
+  buttonColor = "${buttonColor}",
+  fontColor = "${fontColor}",${
+    customImageUrl
+      ? `
+  customImageUrl = "${customImageUrl}",`
+      : ''
+  }
+}: KryptipTipjarProps) {
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    // Load CSS
+    const link = document.createElement('link')
+    link.rel = 'stylesheet'
+    link.href = 'https://kryptip.xyz/embed.css'
+    document.head.appendChild(link)
+
+    // Load Script
+    const script = document.createElement('script')
+    script.src = 'https://kryptip.xyz/embed.js'
+    script.async = true
+    document.body.appendChild(script)
+
+    return () => {
+      document.head.removeChild(link)
+      document.body.removeChild(script)
+    }
+  }, [])
+
+  return (
+    <div
+      id="tipjar"
+      ref={ref}${
+        lnAddress
+          ? `
+      data-lnaddress={lnAddress}`
+          : ''
+      }${
+        bolt12Offer
+          ? `
+      data-bolt12={bolt12Offer}`
+          : ''
+      }
+      data-button={buttonText}
+      data-color={buttonColor}
+      data-fontcolor={fontColor}${
+        customImageUrl
+          ? `
+      data-customimage={customImageUrl}`
+          : ''
+      }
+    />
+  )
+}`
+
+  const jsxSnippet = `// KryptipTipjar.jsx
+import { useEffect, useRef } from 'react'
+
+export function KryptipTipjar({${
+    lnAddress
+      ? `
+  lnAddress = "${lnAddress}",`
+      : ''
+  }${
+    bolt12Offer
+      ? `
+  bolt12Offer = "${bolt12Offer}",`
+      : ''
+  }
+  buttonText = "${buttonText}",
+  buttonColor = "${buttonColor}",
+  fontColor = "${fontColor}",${
+    customImageUrl
+      ? `
+  customImageUrl = "${customImageUrl}",`
+      : ''
+  }
+}) {
+  const ref = useRef(null)
+
+  useEffect(() => {
+    // Load CSS
+    const link = document.createElement('link')
+    link.rel = 'stylesheet'
+    link.href = 'https://kryptip.xyz/embed.css'
+    document.head.appendChild(link)
+
+    // Load Script
+    const script = document.createElement('script')
+    script.src = 'https://kryptip.xyz/embed.js'
+    script.async = true
+    document.body.appendChild(script)
+
+    return () => {
+      document.head.removeChild(link)
+      document.body.removeChild(script)
+    }
+  }, [])
+
+  return (
+    <div
+      id="tipjar"
+      ref={ref}${
+        lnAddress
+          ? `
+      data-lnaddress={lnAddress}`
+          : ''
+      }${
+        bolt12Offer
+          ? `
+      data-bolt12={bolt12Offer}`
+          : ''
+      }
+      data-button={buttonText}
+      data-color={buttonColor}
+      data-fontcolor={fontColor}${
+        customImageUrl
+          ? `
+      data-customimage={customImageUrl}`
+          : ''
+      }
+    />
+  )
+}`
+
+  const getCurrentSnippet = () => {
+    switch (codeType) {
+      case 'tsx':
+        return tsxSnippet
+      case 'jsx':
+        return jsxSnippet
+      default:
+        return htmlSnippet
+    }
+  }
+
   const copyCode = async () => {
     try {
-      await navigator.clipboard.writeText(codeSnippet)
+      await navigator.clipboard.writeText(getCurrentSnippet())
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     } catch (error) {
@@ -267,16 +440,24 @@ export function GetATipjar({
 
               {/* Button Customization Section */}
               <div className="bg-[#24292e] rounded-lg p-6 border border-gray-600">
-                <h4 className="text-lg font-display font-semibold text-white mb-4">Button Appearance</h4>
-                <p className="text-sm font-body text-white/70 mb-6">Choose between a text button or custom image</p>
-                
+                <h4 className="text-lg font-display font-semibold text-white mb-4">
+                  Button Appearance
+                </h4>
+                <p className="text-sm font-body text-white/70 mb-6">
+                  Choose between a text button or custom image
+                </p>
+
                 {/* Text Button Options */}
                 <div className="mb-6">
-                  <h5 className="text-md font-body font-medium text-white mb-3">Text Button (Default)</h5>
-                  
+                  <h5 className="text-md font-body font-medium text-white mb-3">
+                    Text Button (Default)
+                  </h5>
+
                   <div className="space-y-4">
                     <div>
-                      <label className="block text-sm font-body font-medium mb-2 text-white/90">Button Text</label>
+                      <label className="block text-sm font-body font-medium mb-2 text-white/90">
+                        Button Text
+                      </label>
                       <input
                         type="text"
                         value={buttonText}
@@ -318,7 +499,9 @@ export function GetATipjar({
                     <div className="flex flex-col sm:flex-row gap-4">
                       {/* Button Color */}
                       <div className="flex flex-col w-full sm:w-1/2">
-                        <label className="block text-sm font-body font-medium mb-2 text-white/90">Button Color</label>
+                        <label className="block text-sm font-body font-medium mb-2 text-white/90">
+                          Button Color
+                        </label>
                         <div className="flex gap-2 items-center">
                           <input
                             type="color"
@@ -356,7 +539,9 @@ export function GetATipjar({
 
                       {/* Font Color */}
                       <div className="flex flex-col w-full sm:w-1/2">
-                        <label className="block text-sm font-body font-medium mb-2 text-white/90">Font Color</label>
+                        <label className="block text-sm font-body font-medium mb-2 text-white/90">
+                          Font Color
+                        </label>
                         <div className="flex gap-2 items-center">
                           <input
                             type="color"
@@ -398,15 +583,32 @@ export function GetATipjar({
                 {/* Custom Image Option */}
                 <div className="border-t border-gray-600 pt-6">
                   <div className="flex items-center gap-2 mb-3">
-                    <h5 className="text-md font-body font-medium text-white">Custom Image Button</h5>
+                    <h5 className="text-md font-body font-medium text-white">
+                      Custom Image Button
+                    </h5>
                     <div className="relative group">
-                      <svg className="w-4 h-4 text-white/60 cursor-help" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      <svg
+                        className="w-4 h-4 text-white/60 cursor-help"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
                       </svg>
                       <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-900 text-white text-xs rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none w-64 z-10">
                         <div className="text-center">
-                          <p className="mb-2"><strong>Important:</strong> Always configure the text button above as a fallback option.</p>
-                          <p className="mb-2">Only upload appropriate images and respect copyright restrictions.</p>
+                          <p className="mb-2">
+                            <strong>Important:</strong> Always configure the text button above as a
+                            fallback option.
+                          </p>
+                          <p className="mb-2">
+                            Only upload appropriate images and respect copyright restrictions.
+                          </p>
                           <p>Custom images override text buttons when properly configured.</p>
                         </div>
                         <div className="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-gray-900"></div>
@@ -417,61 +619,61 @@ export function GetATipjar({
                     Upload a custom image for your tip button (PNG, JPG, GIF, WEBP - max 500KB)
                   </p>
 
-                {customImageUrl ? (
-                  <div className="flex items-center gap-4">
-                    <div className="w-16 h-16 bg-gray-700 rounded-lg overflow-hidden">
-                      <img
-                        src={customImageUrl}
-                        alt="Custom button"
-                        className="w-full h-full object-contain"
+                  {customImageUrl ? (
+                    <div className="flex items-center gap-4">
+                      <div className="w-16 h-16 bg-gray-700 rounded-lg overflow-hidden">
+                        <img
+                          src={customImageUrl}
+                          alt="Custom button"
+                          className="w-full h-full object-contain"
+                        />
+                      </div>
+                      <button
+                        onClick={clearCustomImage}
+                        className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors text-sm"
+                      >
+                        Remove Image
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="relative">
+                      <input
+                        type="file"
+                        id="image-upload"
+                        accept="image/png,image/jpeg,image/jpg,image/gif,image/webp"
+                        onChange={handleImageUpload}
+                        disabled={isUploading}
+                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer disabled:cursor-not-allowed"
                       />
+                      <div
+                        className={`border-2 border-dashed border-gray-600 rounded-lg p-6 text-center transition-colors ${isUploading ? 'opacity-50' : 'hover:border-gray-500'}`}
+                      >
+                        {isUploading ? (
+                          <div className="text-white/60">
+                            <div className="animate-spin w-6 h-6 border-2 border-white/20 border-t-white/60 rounded-full mx-auto mb-2"></div>
+                            Uploading...
+                          </div>
+                        ) : (
+                          <div className="text-white/60">
+                            <svg
+                              className="w-8 h-8 mx-auto mb-2"
+                              fill="none"
+                              stroke="currentColor"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                              />
+                            </svg>
+                            Click to upload image
+                          </div>
+                        )}
+                      </div>
                     </div>
-                    <button
-                      onClick={clearCustomImage}
-                      className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors text-sm"
-                    >
-                      Remove Image
-                    </button>
-                  </div>
-                ) : (
-                  <div className="relative">
-                    <input
-                      type="file"
-                      id="image-upload"
-                      accept="image/png,image/jpeg,image/jpg,image/gif,image/webp"
-                      onChange={handleImageUpload}
-                      disabled={isUploading}
-                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer disabled:cursor-not-allowed"
-                    />
-                    <div
-                      className={`border-2 border-dashed border-gray-600 rounded-lg p-6 text-center transition-colors ${isUploading ? 'opacity-50' : 'hover:border-gray-500'}`}
-                    >
-                      {isUploading ? (
-                        <div className="text-white/60">
-                          <div className="animate-spin w-6 h-6 border-2 border-white/20 border-t-white/60 rounded-full mx-auto mb-2"></div>
-                          Uploading...
-                        </div>
-                      ) : (
-                        <div className="text-white/60">
-                          <svg
-                            className="w-8 h-8 mx-auto mb-2"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                            />
-                          </svg>
-                          Click to upload image
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
+                  )}
 
                   {uploadError && (
                     <p className="text-sm font-body text-red-400 mt-2">{uploadError}</p>
@@ -526,12 +728,48 @@ export function GetATipjar({
 
             {showCode && (
               <div className="mt-6 relative">
+                {/* Code Type Toggle */}
+                <div className="flex justify-center mb-4">
+                  <div className="inline-flex rounded-lg bg-[#24292e] p-1 border border-gray-600">
+                    <button
+                      onClick={() => setCodeType('html')}
+                      className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+                        codeType === 'html'
+                          ? 'bg-[#2f353b] text-white'
+                          : 'text-white/70 hover:text-white'
+                      }`}
+                    >
+                      HTML
+                    </button>
+                    <button
+                      onClick={() => setCodeType('tsx')}
+                      className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+                        codeType === 'tsx'
+                          ? 'bg-[#2f353b] text-white'
+                          : 'text-white/70 hover:text-white'
+                      }`}
+                    >
+                      React TSX
+                    </button>
+                    <button
+                      onClick={() => setCodeType('jsx')}
+                      className={`px-4 py-2 text-sm font-medium rounded-md transition-colors ${
+                        codeType === 'jsx'
+                          ? 'bg-[#2f353b] text-white'
+                          : 'text-white/70 hover:text-white'
+                      }`}
+                    >
+                      React JSX
+                    </button>
+                  </div>
+                </div>
+
                 <pre className="bg-[#181b1f] text-white text-sm p-4 rounded-lg overflow-x-auto whitespace-pre-wrap">
-                  {codeSnippet}
+                  {getCurrentSnippet()}
                 </pre>
                 <button
                   onClick={copyCode}
-                  className="absolute top-2 right-2 p-2 text-white hover:text-gray-300 transition-colors"
+                  className="absolute top-16 right-2 p-2 text-white hover:text-gray-300 transition-colors"
                   title="Copy to clipboard"
                 >
                   {copied ? (
