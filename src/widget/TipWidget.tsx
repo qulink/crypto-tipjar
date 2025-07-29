@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from 'react'
+import { useState, useCallback, useMemo, useEffect } from 'react'
 import { QRCodeSVG } from 'qrcode.react'
 import { bech32 } from 'bech32'
 import { validateBolt12Offer, validateLightningAddress, sanitizeButtonText } from '../common/utils'
@@ -26,6 +26,12 @@ export function TipWidget({
   const [isOpen, setIsOpen] = useState(false)
   const [showThanks, setShowThanks] = useState(false)
   const [selectedWalletType, setSelectedWalletType] = useState<'lnurl' | 'bolt12' | null>(null)
+  const [imageLoadError, setImageLoadError] = useState(false)
+
+  // Reset image error when customImageUrl changes
+  useEffect(() => {
+    setImageLoadError(false)
+  }, [customImageUrl])
 
   const { lnurlUri, bolt12Uri, hasValidPayment } = useMemo(() => {
     let lnurlUri: string | null = null
@@ -120,14 +126,15 @@ export function TipWidget({
     <>
       <button
         onClick={() => setIsOpen(true)}
-        style={{ backgroundColor: customImageUrl ? 'transparent' : buttonColor, color: fontColor }}
-        className={`${customImageUrl ? 'p-0' : 'px-4 py-2'} rounded-lg hover:opacity-90 transition-opacity font-medium ${customImageUrl ? 'w-24 h-24' : ''}`}
+        style={{ backgroundColor: customImageUrl && !imageLoadError ? 'transparent' : buttonColor, color: fontColor }}
+        className={`${customImageUrl && !imageLoadError ? 'p-0' : 'px-4 py-2'} rounded-lg hover:opacity-90 transition-opacity font-medium ${customImageUrl && !imageLoadError ? 'w-24 h-24' : ''}`}
       >
-        {customImageUrl ? (
+        {customImageUrl && !imageLoadError ? (
           <img
             src={customImageUrl}
             alt={safeButtonText}
             className="w-full h-full object-contain rounded-lg"
+            onError={() => setImageLoadError(true)}
           />
         ) : (
           safeButtonText
