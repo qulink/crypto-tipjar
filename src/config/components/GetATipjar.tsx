@@ -122,7 +122,8 @@ export function KryptipTipjar({${
   return (
     <div
       id="tipjar"
-      ref={ref}${
+      ref={ref}
+      style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'transparent', padding: '16px 0' }}${
         lnAddress
           ? `
       data-lnaddress={lnAddress}`
@@ -192,7 +193,8 @@ export function KryptipTipjar({${
   return (
     <div
       id="tipjar"
-      ref={ref}${
+      ref={ref}
+      style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', background: 'transparent', padding: '16px 0' }}${
         lnAddress
           ? `
       data-lnaddress={lnAddress}`

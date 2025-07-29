@@ -14,9 +14,9 @@ export function KryptipTipjar({
   lnAddress = 'airdog@breez.fun',
   bolt12Offer = 'lno1pgqppmsrse80qf0aara4slvcjxrvu6j2rp5ftmjy4yntlsmsutpkvkt6878s8rv39ytkfrtmcn40uqkqdqwn2f9smxvyj6ardr5pc9al677fwxhzqgpjcl3m3wdvueq0zha9fvw5jlnnk9mprfkmp5p5u4sedvsshxa9vccqx0jw074hxzh3nlvvrszjgyn8773795u88zs588s0zwyz0lax79ex9fagckr8agt57smdltg4uqjadkg4c2rsyq5qtsnh8h2n047kpcq50j2w4pjvl79ns828zpn5kj8zt5kvq946qqew6xgj2sguzfcyny7jd7d3qppr8tfgzm7hsq0atagv0q332knhnskjgwczgmc7jwkqmm5s2eue6y5ykl0s',
   buttonText = 'Donate Bitcoin',
-  buttonColor = '#38c5fe',
-  fontColor = '#ffffff',
-  customImageUrl = 'https://xqygsqdprsvhrhymrjym.supabase.co/storage/v1/object/public/button-uploads/1753738221837-ylbo0qdaw1d.gif',
+  buttonColor = '#38C5FE',
+  fontColor = '#FFFFFF',
+  customImageUrl = 'https://xqygsqdprsvhrhymrjym.supabase.co/storage/v1/object/public/button-uploads/1753778716313-8g07jbaom6.gif',
 }: KryptipTipjarProps) {
   const ref = useRef<HTMLDivElement>(null)
 
@@ -43,6 +43,13 @@ export function KryptipTipjar({
     <div
       id="tipjar"
       ref={ref}
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        background: 'transparent',
+        padding: '40px 0 0 0',
+      }}
       data-lnaddress={lnAddress}
       data-bolt12={bolt12Offer}
       data-button={buttonText}

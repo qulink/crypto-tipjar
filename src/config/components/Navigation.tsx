@@ -20,7 +20,7 @@ export function Navigation() {
 
   return (
     <>
-      {/* Transparent hover zone (behind the navbar) */}
+      {/* Transparent hover zone (behind the navbar)*/}
       <div
         className="fixed top-0 left-0 w-full h-24 z-40"
         onMouseEnter={() => setIsHoveringZone(true)}

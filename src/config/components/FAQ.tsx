@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { StarryBackground } from './StarryBackground'
+import { KryptipTipjar } from './KryptipTipjar'
 
 export function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
@@ -30,7 +31,20 @@ export function FAQ() {
       answer:
         'A custodial wallet is managed by a third party who holds your funds and keys for you—easy to use but with less control. A non-custodial wallet gives you full control of your keys and funds, offering more privacy and sovereignty but requiring more responsibility. Both can support Lightning payments.',
     },
-
+    {
+      question: 'Can I customize the widget appearance?',
+      answer:
+        'Yes! You can change the button text and colors to match your website’s look and feel. You’ll see a live preview as you customize it. You can also upload your own image — like a logo, emoji, or sticker — to use as the button instead of text. Supported formats are PNG, JPG, GIF, and WEBP, with a file size limit of 500KB. Please only upload appropriate images and make sure you have the rights to use them — avoid copyrighted or restricted content. Even if you upload a custom image, we recommend setting a button text and color as a fallback in case the image fails to render on your site.',
+    },
+    {
+      question: 'Which code snippet should I use — HTML, React TSX, or React JSX?',
+      answer:
+        'We provide three types of embed snippets to match your tech stack.\n\n' +
+        'If you’re embedding the widget into a static site or any regular HTML file (like Wordpress, Notion, or a personal blog), use the HTML snippet. You can paste it directly into your HTML code.\n\n' +
+        'If your project is built with React JavaScript (files ending in .js or .jsx and not using TypeScript), use the React JSX snippet.\n\n' +
+        'If your project uses TypeScript (files ending in .ts or .tsx), use the React TSX snippet.\n\n' +
+        'The React snippet can be used as a standalone component. You can paste the code into a new file (e.g., KryptipTipjar.jsx or KryptipTipjar.tsx), then import and render it as <KryptipTipjar /> anywhere in your app.',
+    },
     {
       question: 'Are there any fees?',
       answer:
@@ -50,11 +64,6 @@ export function FAQ() {
       question: 'Is this safe to use on my website?',
       answer:
         'Absolutely. The Kryptip widget only displays a tip button and a QR code. It doesn’t collect personal data or handle your payments — all tips go directly to your wallet.',
-    },
-    {
-      question: 'Can I customize the widget appearance?',
-      answer:
-        'Yes! You can change the button text and colors to match your website’s look and feel. You’ll see a live preview as you customize it. You can also upload your own image — like a logo, emoji, or sticker — to use as the button instead of text. Supported formats are PNG, JPG, GIF, and WEBP, with a file size limit of 500KB. Please only upload appropriate images and make sure you have the rights to use them — avoid copyrighted or restricted content. Even if you upload a custom image, we recommend setting a button text and color as a fallback in case the image fails to render on your site.',
     },
     {
       question: 'Do I need to create an account?',
@@ -113,6 +122,7 @@ export function FAQ() {
           ))}
         </div>
       </div>
+      <KryptipTipjar />
     </section>
   )
 }

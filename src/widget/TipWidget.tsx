@@ -124,8 +124,8 @@ export function TipWidget({
         className={`${customImageUrl ? 'p-0' : 'px-4 py-2'} rounded-lg hover:opacity-90 transition-opacity font-medium ${customImageUrl ? 'w-24 h-24' : ''}`}
       >
         {customImageUrl ? (
-          <img 
-            src={customImageUrl} 
+          <img
+            src={customImageUrl}
             alt={safeButtonText}
             className="w-full h-full object-contain rounded-lg"
           />
@@ -173,7 +173,7 @@ export function TipWidget({
                 <div className="space-y-3">
                   <button
                     onClick={() => handleWalletTypeSelection('lnurl')}
-                    className="w-full bg-yellow-500 hover:bg-yellow-600 text-black px-4 py-3 rounded-lg transition-colors"
+                    className="w-full bg-[#38C5FE] hover:bg-[#199FD6] text-black px-4 py-3 rounded-lg transition-colors"
                   >
                     LNURL-compatible wallet
                     <div className="text-xs opacity-90 mt-1">
@@ -182,7 +182,7 @@ export function TipWidget({
                   </button>
                   <button
                     onClick={() => handleWalletTypeSelection('bolt12')}
-                    className="w-full bg-yellow-500 hover:bg-yellow-600 text-black px-4 py-3 rounded-lg transition-colors"
+                    className="w-full bg-[#38C5FE] hover:bg-[#199FD6] text-black px-4 py-3 rounded-lg transition-colors"
                   >
                     Bolt12-compatible wallet
                     <div className="text-xs opacity-90 mt-1">Phoenix, etc.</div>

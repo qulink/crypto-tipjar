@@ -4,7 +4,6 @@ import { Hero } from './components/Hero'
 import { HowItWorks } from './components/HowItWorks'
 import { GetATipjar } from './components/GetATipjar'
 import { FAQ } from './components/FAQ'
-import { KryptipTipjar } from './components/KryptipTipjar'
 import { Footer } from './components/Footer'
 
 function App() {
@@ -37,7 +36,6 @@ function App() {
           setCustomImageUrl={setCustomImageUrl}
         />
         <FAQ />
-        <KryptipTipjar />
       </main>
 
       <Footer />
