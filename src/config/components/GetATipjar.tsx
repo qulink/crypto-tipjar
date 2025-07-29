@@ -509,14 +509,14 @@ export function KryptipTipjar({${
                             type="color"
                             value={buttonColor}
                             onChange={(e) => setButtonColor(e.target.value)}
-                            className="w-12 h-12 rounded-lg border border-gray-600 cursor-pointer"
+                            className="w-12 h-12 flex-shrink-0 rounded-lg border border-gray-600 cursor-pointer"
                           />
                           <input
                             type="text"
                             value={buttonColor}
                             onChange={(e) => setButtonColor(e.target.value)}
                             placeholder="#38C5FE"
-                            className="flex-1 px-4 py-3 border border-gray-600 bg-[#181b1f] rounded-lg text-white focus:outline-none focus:border-transparent relative"
+                            className="flex-1 min-w-0 px-4 py-3 border border-gray-600 bg-[#181b1f] rounded-lg text-white focus:outline-none focus:border-transparent relative"
                             style={
                               {
                                 '--tw-ring-color': 'transparent',
@@ -549,14 +549,14 @@ export function KryptipTipjar({${
                             type="color"
                             value={fontColor}
                             onChange={(e) => setFontColor(e.target.value)}
-                            className="w-12 h-12 rounded-lg border border-gray-600 cursor-pointer"
+                            className="w-12 h-12 flex-shrink-0 rounded-lg border border-gray-600 cursor-pointer"
                           />
                           <input
                             type="text"
                             value={fontColor}
                             onChange={(e) => setFontColor(e.target.value)}
                             placeholder="#000000"
-                            className="flex-1 px-4 py-3 border border-gray-600 bg-[#181b1f] rounded-lg text-white focus:outline-none focus:border-transparent relative"
+                            className="flex-1 min-w-0 px-4 py-3 border border-gray-600 bg-[#181b1f] rounded-lg text-white focus:outline-none focus:border-transparent relative"
                             style={
                               {
                                 '--tw-ring-color': 'transparent',
