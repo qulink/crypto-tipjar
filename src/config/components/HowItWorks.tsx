@@ -42,7 +42,7 @@ export function HowItWorks() {
           <HowItWorksStep
             number="4"
             title="Copy the Code"
-            description="You’ll receive a small snippet of HTML code. Copy and paste it into your website. Platforms like WordPress support this via custom HTML blocks or embeds."
+            description="You’ll receive a snippet of HTML or React code. Copy and paste it into your website or app—HTML for platforms like WordPress, React for modern frontend frameworks."
           />
 
           <HowItWorksStep
