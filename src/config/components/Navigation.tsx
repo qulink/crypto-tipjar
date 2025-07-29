@@ -20,14 +20,6 @@ export function Navigation() {
 
   return (
     <>
-      {/* Transparent hover zone (behind the navbar)*/}
-      <div
-        className="fixed top-0 left-0 w-full h-24 z-40"
-        onMouseEnter={() => setIsHoveringZone(true)}
-        onMouseLeave={() => setIsHoveringZone(false)}
-      />
-
-      {/* Actual navbar (on top, but not full width!) */}
       <nav
         className={`fixed z-50 top-6 left-1/2 transform -translate-x-1/2
           h-16 rounded-full bg-[#000000]
