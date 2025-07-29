@@ -12,7 +12,7 @@ export function Hero() {
       }}
     >
       {/* Content */}
-      <div className="w-full max-w-7xl h-full mx-auto px-4 pt-40 md:pt-32 pb-20">
+      <div className="w-full max-w-7xl h-full mx-auto px-4 pt-56 md:pt-40 pb-20">
         <div className="sticky top-24">
           <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-12">
             <div className="w-full md:w-1/2 text-center md:text-left flex flex-col items-center md:items-start md:pl-12">
