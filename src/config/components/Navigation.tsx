@@ -24,7 +24,7 @@ export function Navigation() {
           h-16 rounded-full bg-[#000000]
           transition-all duration-300 ease-in-out px-4 overflow-hidden
           flex items-center
-          ${expanded ? 'w-[320px] gap-4 justify-start' : 'w-16 justify-center'}
+          ${expanded ? 'w-[300px] gap-4 justify-between px-6' : 'w-16 justify-center'}
         `}
         onMouseEnter={() => setIsHoveringNav(true)}
         onMouseLeave={() => setIsHoveringNav(false)}
@@ -42,7 +42,7 @@ export function Navigation() {
           className={`
             flex items-center gap-6 text-white text-sm md:text-base font-semibold
             transition-all duration-500 ease-in-out
-            ${expanded ? 'opacity-100 max-w-screen-md scale-100 ml-2' : 'opacity-0 max-w-0 scale-95'}
+            ${expanded ? 'opacity-100 max-w-screen-md scale-100' : 'opacity-0 max-w-0 scale-95'}
             overflow-hidden whitespace-nowrap
           `}
         >
