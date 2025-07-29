@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 
 export function Navigation() {
-  const [isHoveringZone, setIsHoveringZone] = useState(false)
   const [isHoveringNav, setIsHoveringNav] = useState(false)
   const [scrolledPastHero, setScrolledPastHero] = useState(false)
 
@@ -16,7 +15,7 @@ export function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  const expanded = isHoveringZone || isHoveringNav || scrolledPastHero
+  const expanded = isHoveringNav || scrolledPastHero
 
   return (
     <>
