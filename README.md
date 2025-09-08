@@ -1,7 +1,7 @@
 # KRYPTIP - The Crypto Tip Jar
 
 **A simple, customizable Lightning tip widget for content creators.**  
-Let your fans support you with Bitcoin, directly on your website — no backend needed.
+Let your fans support you with Bitcoin, directly on your website — no signup or backend needed.
 
 ## ✨ Features
 
